@@ -1,0 +1,162 @@
+/* ============================
+   LAYOUT & ANIMATION
+============================ */
+.progress-container {
+  min-height: 85vh;
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================
+   STEPPER BESAR
+============================ */
+.progress-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  padding: 20px 0;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+/* Lingkaran Step Besar */
+.icon-wrapper.big-step {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #d5c8c3;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px; /* Ukuran Icon */
+  transition: all 0.4s ease;
+  border: 5px solid #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.icon-wrapper.active {
+  background-color: #8c6b60;
+}
+
+/* Efek Berdenyut untuk Step Aktif */
+.pulse-active {
+  box-shadow: 0 0 0 0 rgba(140, 107, 96, 0.7);
+  animation: pulse 2.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(140, 107, 96, 0.5); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(140, 107, 96, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(140, 107, 96, 0); }
+}
+
+/* Label Teks */
+.step .label {
+  margin-top: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #a08d86;
+  text-align: center;
+  width: 140px;
+}
+
+.step .label.active-text {
+  color: #5a453f;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ============================
+   PROGRESS LINE TEBAL
+============================ */
+.progress-line.big-line {
+  width: 150px; /* Panjang garis antar step */
+  height: 8px;  /* Ketebalan garis */
+  background-color: #e0d8d5;
+  margin-top: 36px; /* Posisi tengah icon (80/2 - margin) */
+  z-index: 1;
+  transition: all 0.8s ease;
+  border-radius: 10px;
+}
+
+.progress-line.filled {
+  background: linear-gradient(90deg, #8c6b60, #b2938a);
+}
+
+/* ============================
+   CARD & BUTTONS
+============================ */
+.info-card {
+  padding: 40px;
+  border-radius: 25px;
+  border: 1px solid #eee;
+}
+
+.wa-btn {
+  background-color: #8c6b60;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.wa-btn:hover {
+  background-color: #5a453f;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.rotate-icon i {
+  display: inline-block;
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* ============================
+   RESPONSIVE (MOBILE)
+============================ */
+@media (max-width: 576px) {
+  .progress-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .icon-wrapper.big-step {
+    width: 65px;
+    height: 65px;
+    font-size: 26px;
+  }
+
+  .progress-line.big-line {
+    width: 6px;
+    height: 50px;
+    margin: 0;
+  }
+
+  .step .label {
+    width: auto;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+}

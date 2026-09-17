@@ -1,0 +1,13 @@
+.react-datepicker-wrapper {
+  width: 100% !important;
+}
+
+.react-datepicker__input-container {
+  width: 100% !important;
+}
+
+.tanggal-kirim-input {
+  width: 100% !important;
+  height: 48px;
+  font-size: 1rem;
+}

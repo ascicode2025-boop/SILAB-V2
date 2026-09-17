@@ -1,0 +1,95 @@
+/* ======================================================= */
+/* TEMA: LABORATORIUM IPB (FINAL NO DOUBLE TEXT)           */
+/* ======================================================= */
+
+body.ant-modal-open { padding-right: 0 !important; overflow: hidden !important; }
+html.ant-modal-open { padding-right: 0 !important; }
+
+/* INPUT & SELECT */
+.select-wrapper { display: flex; flex-direction: column; width: 100%; margin-top: 0.5rem; margin-bottom: 0.5rem; }
+.custom-select { width: 100%; padding: 12px 16px; border: 1px solid #d9d9d9; border-radius: 10px; background: white; font-size: 14px; color: #4b5563; outline: none; cursor: pointer; transition: 0.2s; }
+.custom-select:focus { border-color: #8D6E63; box-shadow: 0 0 0 3px rgba(141, 110, 99, 0.1); }
+.custom-select-clean { background: transparent; border: none; font-size: 16px; font-weight: 600; color: #5D4037; padding-right: 25px; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1.5L6 6.5L11 1.5' stroke='%235D4037' stroke-width='2' stroke-linecap='round'/></svg>"); background-repeat: no-repeat; background-position: right center; background-size: 12px; }
+.custom-select-clean:focus { outline: none !important; }
+
+/* KALENDER WRAPPER & HEADER */
+.calendar-wrapper { border: 1px solid #e5e7eb; border-radius: 20px; padding: 30px; background: white; box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05); }
+.calendar-custom-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 30px; margin-bottom: 10px; border-bottom: 2px solid #f3f4f6; }
+.calendar-custom-header .left-controls { display: flex; align-items: center; gap: 10px; }
+.calendar-custom-header .center-title { font-size: 20px; font-weight: 800; color: #3e2723; text-transform: uppercase; letter-spacing: 1px; margin-left: 20px; }
+.calendar-custom-header .nav-circle { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #e5e7eb; background: white; color: #5D4037; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 12px; }
+.calendar-custom-header .nav-circle:hover { background: #f5f5f4; border-color: #8D6E63; color: #8D6E63; transform: scale(1.1); }
+.btn-today { border: 1px solid #8D6E63; color: #8D6E63 !important; background: white; border-radius: 25px !important; padding: 6px 20px !important; height: 36px !important; font-weight: 600; font-size: 14px !important; }
+.btn-today:hover { background: #8D6E63; color: white !important; }
+.date-picker-header { height: 36px !important; }
+
+/* TABEL KALENDER */
+.custom-calendar .ant-picker-content table { border-spacing: 8px !important; border-collapse: separate !important; table-layout: fixed !important; width: 100%; }
+.custom-calendar .ant-picker-content tbody tr { height: 85px !important; }
+.custom-calendar .ant-picker-content th { color: #8D6E63; font-weight: 700; padding-bottom: 20px; font-size: 14px; text-transform: uppercase; text-align: center; }
+.ant-picker-cell-selected .ant-picker-cell-inner { background: transparent !important; box-shadow: none !important; }
+.custom-calendar .ant-picker-content td { padding: 0 !important; vertical-align: top; height: 85px !important; }
+
+/* KOTAK TANGGAL */
+.calendar-cell-custom { width: 100%; height: 100% !important; min-height: 85px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 12px; transition: all 0.2s ease; cursor: pointer; position: relative; background-color: transparent; box-sizing: border-box; }
+.date-number { font-size: 18px; font-weight: 500; line-height: 1; }
+
+/* BADGES STYLE (DIRENDER OLEH JS) */
+.quota-badge { font-size: 10px; color: #059669; background-color: #ecfdf5; padding: 2px 6px; border-radius: 10px; margin-top: 2px; font-weight: 600; }
+.tutup-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; margin-top: 4px; line-height: 1; color: #ef5350; }
+.full-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; margin-top: 4px; line-height: 1; color: #f59e0b; /* ORANYE */ }
+
+/* A. BULAN LAIN */
+.calendar-cell-custom.outside-month { opacity: 0.4; color: #bbb; pointer-events: none; }
+
+/* B. LEWAT */
+.calendar-cell-custom.past-date { background-color: #f9fafb; color: #d1d5db; cursor: not-allowed; border: 1px dashed #e5e7eb; }
+
+/* C. AVAILABLE */
+.calendar-cell-custom.available { color: #4b5563; }
+.calendar-cell-custom.available:hover { background-color: #efebe9 !important; color: #5d4037 !important; font-weight: 700; border: 1px solid #d7ccc8; }
+
+/* D. TUTUP (MERAH) */
+.calendar-cell-custom.not-available { color: #d32f2f; }
+.calendar-cell-custom.not-available .date-number { font-weight: 700; }
+.calendar-cell-custom.not-available:hover { background-color: #fff5f5; }
+/* HAPUS CSS ::after DISINI AGAR TIDAK DOUBLE */
+
+/* E. PENUH (ORANYE) */
+.calendar-cell-custom.fully-booked { color: #d97706; }
+.calendar-cell-custom.fully-booked .date-number { font-weight: 700; }
+.calendar-cell-custom.fully-booked:hover { background-color: #fffbeb; }
+
+/* F. SELECTED (COKLAT) */
+.calendar-cell-custom.selected { background: linear-gradient(135deg, #8D6E63 0%, #5d4037 100%) !important; color: #ffffff !important; border-radius: 12px; box-shadow: 0 6px 15px rgba(141, 110, 99, 0.4); transform: scale(1.05); z-index: 10; border: none; opacity: 1 !important; }
+.calendar-cell-custom.selected .date-number { color: #ffffff; }
+
+/* Jika Selected, ubah warna badge jadi putih */
+.calendar-cell-custom.selected .quota-badge { color: #fff; background-color: rgba(255,255,255,0.2); }
+.calendar-cell-custom.selected .tutup-badge, 
+.calendar-cell-custom.selected .full-badge { color: #ffffff !important; opacity: 0.9; }
+
+/* G. TODAY (HITAM) */
+.calendar-cell-custom.today { background-color: #222; color: #e0c097; border: none; opacity: 1 !important; }
+.calendar-cell-custom.today.selected { background-color: #222; color: #e0c097; border: 2px solid #8D6E63; }
+.calendar-cell-custom.today .tutup-badge { color: #ef5350 !important; font-weight: 800; }
+.calendar-cell-custom.today .full-badge { color: #f59e0b !important; font-weight: 800; }
+
+/* LEGENDA */
+.calendar-legend-container { margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; display: flex; align-items: center; }
+.legend-item { display: flex; align-items: center; font-size: 14px; color: #555; font-weight: 500; margin-right: 20px; }
+.legend-box { width: 20px; height: 20px; margin-right: 8px; border-radius: 4px; }
+.legend-box.red { background-color: #d32f2f; }
+.legend-box.orange { background-color: #f59e0b; }
+
+/* FORM */
+.quota-container { background-color: #fafafa; padding: 40px; border-radius: 24px; border: 1px solid #f0f0f0; max-width: 600px; margin: 40px auto 0 auto; box-shadow: 0 10px 40px rgba(0,0,0,0.03); }
+.quota-container h2 { margin-bottom: 30px; font-size: 22px; color: #3e2723; font-weight: 700; }
+.quota-form { display: flex; flex-direction: column; gap: 24px; }
+.quota-input { border: 1px solid #e0e0e0; border-radius: 10px; padding: 16px; width: 100%; text-align: center; font-size: 18px; font-weight: 600; background: #fafafa; transition: 0.2s; }
+.quota-input:focus { border-color: #8D6E63; background: white; outline: none; box-shadow: 0 0 0 4px rgba(141, 110, 99, 0.1); }
+.quota-button { background: #8D6E63; color: white; font-size: 16px; font-weight: 700; padding: 18px 24px; border-radius: 12px; border: none; width: 100%; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; margin-top: 15px; }
+.quota-button:hover { background-color: #6d4c41; transform: translateY(-2px); box-shadow: 0 8px 16px rgba(141, 110, 99, 0.25); }
+input[type="checkbox"] { accent-color: #8D6E63; width: 20px; height: 20px; cursor: pointer; margin-right: 10px; }
+
+@media (max-width: 640px) { .calendar-wrapper { padding: 15px; } .custom-calendar .ant-picker-content tbody tr { height: 70px !important; } .calendar-cell-custom { min-height: 70px; font-size: 16px; } .calendar-custom-header { flex-direction: column; gap: 15px; align-items: flex-start; } .quota-container { padding: 20px; } }

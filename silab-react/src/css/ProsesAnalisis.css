@@ -1,0 +1,129 @@
+.progress-container {
+    min-height: 75vh;
+}
+
+/* STEPPER WRAPPER */
+.progress-analisis-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    padding: 20px 0;
+}
+
+.analisis-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+}
+
+/* ICON BESAR */
+.analisis-icon.big-step {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background-color: #d5c8c3;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    transition: all 0.4s ease;
+    border: 5px solid #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.analisis-icon.active {
+    background-color: #8c6b60;
+}
+
+/* GARIS TEBAL */
+.analisis-line.big-line {
+    width: 120px;
+    height: 8px;
+    background-color: #e0d8d5;
+    margin-top: 34px; /* Center of 75px icon */
+    z-index: 1;
+    border-radius: 10px;
+}
+
+.analisis-line.filled {
+    background-color: #8c6b60;
+}
+
+/* TEKS LABEL */
+.analisis-step .label {
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #a08d86;
+    text-align: center;
+    width: 130px;
+}
+
+.analisis-step .label.active-text {
+    color: #5a453f;
+    font-weight: 800;
+}
+
+/* ANIMASI PULSE */
+.pulse-active {
+    box-shadow: 0 0 0 0 rgba(140, 107, 96, 0.7);
+    animation: pulse-analisis 2.5s infinite;
+}
+
+@keyframes pulse-analisis {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(140, 107, 96, 0.5); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(140, 107, 96, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(140, 107, 96, 0); }
+}
+
+/* KARTU INFO */
+.info-card {
+    padding: 40px;
+    border-radius: 25px;
+    border: 1px solid #eee;
+}
+
+.rotate-icon-slow {
+    animation: spin-slow 4s linear infinite;
+}
+
+@keyframes spin-slow {
+    100% { transform: rotate(360deg); }
+}
+
+.wa-btn {
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 700;
+    transition: 0.3s;
+    border: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .progress-analisis-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .analisis-line.big-line {
+        width: 6px;
+        height: 50px;
+        margin: 0;
+    }
+
+    .analisis-icon.big-step {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+
+    .analisis-step .label {
+        width: auto;
+        margin-bottom: 10px;
+    }
+}

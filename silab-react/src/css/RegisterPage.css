@@ -1,0 +1,36 @@
+.login-page {
+  background-color: #d9d9d9;
+  min-height: 100vh;
+}
+
+.login-logo {
+  width: 110px;
+  margin-bottom: 10px;
+}
+
+.login-title {
+  color: #8D6E63;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.login-btn {
+  background-color: #8D6E63;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.login-btn:hover {
+  background-color: #45352f;
+}
+
+.text-link {
+  color: #004aad;
+  text-decoration: none;
+}
+
+.text-link:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,20 @@
+/* Hapus margin/padding default pada body & html */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 100%;
+}
+
+/* Pastikan footer mencakup full width */
+footer {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Jika ada container/wrapper, pastikan juga */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}

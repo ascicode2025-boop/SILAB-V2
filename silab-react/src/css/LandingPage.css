@@ -1,0 +1,158 @@
+/* ======================================
+   GLOBAL — FIX ANTI SCROLL KE KANAN
+====================================== */
+html, body {
+  width: 100%;
+  overflow-x: hidden !important;
+}
+
+.no-overflow,
+.gallery-section,
+.gallery-image-wrapper,
+.daftarAnalisis-card,
+#beranda {
+  max-width: 100% !important;
+  overflow-x: visible !important;
+}
+
+/* ======================================
+   CAROUSEL — INDICATOR CUSTOM
+====================================== */
+.carousel-custom-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.gallery-caption {
+  font-family: Poppins, sans-serif;
+  font-size: 0.9rem;
+  color: #000;
+  margin-top: 8px;
+  text-align: center;
+}
+
+
+.indicator-dot {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  background-color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.indicator-dot:hover {
+  background-color: #BBBBBB;
+}
+
+.indicator-dot.active {
+  background-color: #8D6E63 !important;
+  transform: scale(1);
+}
+
+/* ======================================
+   SECTION GALERI
+====================================== */
+#galeri {
+  margin-top: 3rem;
+}
+
+/* ======================================
+   CARD ANALISIS
+====================================== */
+.analysis-card {
+  width: 260px;
+  max-width: 100%;
+  border: none;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.analysis-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+.analysis-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.analysis-title {
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.analysis-price {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #000;
+}
+
+/* ======================================
+   RESPONSIVE — TABLET (≤992px)
+====================================== */
+@media (max-width: 992px) {
+  .analysis-card {
+    width: 220px;
+  }
+
+  .analysis-title {
+    font-size: 0.95rem;
+  }
+
+  .analysis-price {
+    font-size: 0.9rem;
+  }
+}
+
+/* ======================================
+   RESPONSIVE — MOBILE (≤576px)
+====================================== */
+@media (max-width: 576px) {
+  .analysis-card {
+    width: 90%;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .analysis-title {
+    font-size: 0.9rem;
+  }
+
+  .analysis-price {
+    font-size: 0.85rem;
+  }
+
+  .indicator-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  /* FIX tombol awalnya overflow ke kanan */
+  #buttonAnalisis {
+    margin-right: 0 !important;
+    padding-right: 1rem;
+    overflow-x: hidden;
+  }
+
+  .gallery-image {
+    height: 160px;
+  }
+
+  .gallery-caption {
+    font-size: 0.85rem;
+    padding: 5px 8px;
+  }
+}

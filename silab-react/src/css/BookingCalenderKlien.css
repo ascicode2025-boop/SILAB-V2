@@ -1,0 +1,551 @@
+/* ======================================================= */
+/* KALENDER ANT DESIGN – STYLE PROFESIONAL (KLIEN)         */
+/* ======================================================= */
+
+body.ant-modal-open,
+html.ant-modal-open {
+  padding-right: 0 !important;
+  overflow: hidden !important;
+}
+
+.select-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.custom-select-clean {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: #374151;
+  padding-right: 18px;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1.5L6 6.5L11 1.5' stroke='%23666' stroke-width='2' stroke-linecap='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 12px;
+}
+
+.custom-select-clean:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.calendar-wrapper {
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 30px;
+  background: white;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+}
+
+.calendar-custom-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+.calendar-custom-header .left-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.calendar-custom-header .center-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #3e2723;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-left: 20px;
+  text-align: center;
+}
+
+.calendar-custom-header .nav-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #e5e7eb;
+  background: white;
+  color: #5D4037;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-size: 12px;
+}
+
+.calendar-custom-header .nav-circle:hover {
+  background: #f5f5f4;
+  border-color: #8D6E63;
+  color: #8D6E63;
+  transform: scale(1.1);
+}
+
+.btn-today {
+  border: 1px solid #8D6E63;
+  color: #8D6E63 !important;
+  background: white;
+  border-radius: 25px !important;
+  padding: 6px 20px !important;
+  height: 36px !important;
+  font-weight: 600;
+  font-size: 14px !important;
+}
+
+.btn-today:hover {
+  background: #8D6E63;
+  color: white !important;
+}
+
+.date-picker-header {
+  height: 36px !important;
+}
+
+
+
+.custom-calendar .ant-picker-content table {
+  border-spacing: 8px !important;
+  border-collapse: separate !important;
+  table-layout: fixed !important;
+  width: 100%;
+}
+
+.custom-calendar .ant-picker-content th {
+  color: #8D6E63;
+  font-weight: 700;
+  padding-bottom: 20px;
+  font-size: 14px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+
+.ant-picker-cell-selected .ant-picker-cell-inner {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+
+.custom-calendar .ant-picker-content tbody tr {
+  height: 85px !important;
+}
+
+.custom-calendar .ant-picker-content td {
+  padding: 0 !important;
+  vertical-align: top;
+  height: 85px !important;
+}
+
+
+.calendar-cell-custom {
+  width: 100%;
+  height: 100% !important;
+  min-height: 85px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  background-color: transparent;
+  box-sizing: border-box;
+}
+
+.date-number {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.quota-badge {
+  font-size: 10px;
+  color: #059669;
+  background-color: #ecfdf5;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-top: 2px;
+  font-weight: 600;
+}
+
+.calendar-cell-custom.outside-month {
+  opacity: 0.4;
+  color: #bbb;
+  pointer-events: none;
+}
+
+.calendar-cell-custom.outside-month .quota-badge,
+.calendar-cell-custom.outside-month::after {
+  display: none !important;
+}
+
+
+.calendar-cell-custom.past-date {
+  background-color: #f9fafb;
+  color: #d1d5db;
+  cursor: not-allowed;
+  border: 1px dashed #e5e7eb;
+}
+
+.calendar-cell-custom.available {
+  color: #4b5563;
+}
+
+.calendar-cell-custom.available:hover {
+  background-color: #efebe9 !important;
+  color: #5d4037 !important;
+  font-weight: 700;
+  border: 1px solid #d7ccc8;
+}
+
+.calendar-cell-custom.not-available {
+  color: #d32f2f;
+}
+
+.calendar-cell-custom.not-available .date-number {
+  font-weight: 700;
+}
+
+.calendar-cell-custom.not-available:hover {
+  background-color: #fff5f5;
+}
+
+.calendar-cell-custom.fully-booked {
+  color: #d97706;
+}
+
+.calendar-cell-custom.fully-booked .date-number {
+  font-weight: 700;
+}
+
+.calendar-cell-custom.fully-booked:hover {
+  background-color: #fffbeb;
+}
+
+.calendar-cell-custom.selected {
+  background: linear-gradient(135deg, #8D6E63 0%, #5d4037 100%) !important;
+  color: #ffffff !important;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(141, 110, 99, 0.4);
+  transform: scale(1.05);
+  z-index: 10;
+  border: none;
+  opacity: 1 !important;
+}
+
+.calendar-cell-custom.selected .date-number {
+  color: #ffffff;
+}
+
+.calendar-cell-custom.selected.not-available::after,
+.calendar-cell-custom.selected.fully-booked::after,
+.calendar-cell-custom.selected.selected-red::after {
+  color: #ffffff !important;
+  display: block !important;
+}
+
+.calendar-cell-custom.selected .quota-badge {
+  color: #fff !important;
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+
+.calendar-cell-custom.today {
+  background-color: #222;
+  color: #e0c097;
+  border: none;
+  opacity: 1 !important;
+}
+
+.calendar-cell-custom.today.selected {
+  background-color: #222;
+  color: #e0c097;
+  border: 2px solid #8D6E63;
+}
+
+.calendar-cell-custom.today.not-available::after {
+  content: "TUTUP";
+  display: block;
+  color: #ef5350 !important;
+  margin-top: 4px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+
+.calendar-legend-container {
+  margin-top: -5rem;
+  padding-top: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
+  margin-right: 20px;
+}
+
+.legend-box {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  border-radius: 4px;
+}
+
+.legend-box.red {
+  background-color: #d32f2f;
+}
+
+.legend-box.orange {
+  background-color: #f59e0b;
+}
+
+/* CARD UTAMA */
+.quota-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 24px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  animation: fadeIn 0.3s ease;
+  margin-top: 2rem;
+}
+
+/* TITLE */
+.quota-card-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #1f2937;
+}
+
+/* GRID ITEM */
+.quota-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.quota-item {
+  background: #fafafa;
+  border-radius: 14px;
+  padding: 18px;
+  border: 1px solid #ebebeb;
+  transition: 0.2s;
+}
+
+.quota-item:hover {
+  background: #f0f9ff;
+  border-color: #bae6fd;
+  transform: translateY(-3px);
+}
+
+.quota-label {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 5px;
+}
+
+.quota-value {
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* PROGRESS BAR */
+.progress-wrapper {
+  margin-top: 22px;
+}
+
+.progress-text {
+  font-size: 14px;
+  color: #374151;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(to right, #34d399, #10b981);
+  transition: width 0.25s ease;
+}
+
+/* ANIMASI */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
+/* =============================== */
+/*     RESPONSIVE MOBILE FIXES     */
+/* =============================== */
+@media (max-width: 640px) {
+
+  /* WRAPPER */
+  .calendar-wrapper {
+    padding: 12px !important;
+    border-radius: 14px !important;
+  }
+
+  /* HEADER CALENDAR */
+  .calendar-custom-header {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding-bottom: 10px !important;
+  }
+
+  .calendar-custom-header .left-controls {
+    width: 100%;
+    justify-content: center !important;
+    gap: 8px;
+  }
+
+  .calendar-custom-header .center-title {
+    margin-left: 0 !important;
+    font-size: 16px !important;
+  }
+
+  .nav-circle {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 10px !important;
+  }
+
+  .btn-today {
+    padding: 4px 16px !important;
+    height: 32px !important;
+    font-size: 12px !important;
+  }
+
+  /* DATEPICKER */
+  .date-picker-header {
+    width: 100% !important;
+    height: 34px !important;
+    font-size: 12px !important;
+  }
+
+  /* CALENDAR GRID */
+  .custom-calendar .ant-picker-content table {
+    border-spacing: 4px !important;
+  }
+
+  .custom-calendar .ant-picker-content th {
+    font-size: 12px !important;
+    padding-bottom: 10px !important;
+  }
+
+  .custom-calendar .ant-picker-content tbody tr {
+    height: 55px !important;
+  }
+
+  .custom-calendar .ant-picker-content td {
+    height: 55px !important;
+  }
+
+  .calendar-cell-custom {
+    min-height: 55px !important;
+    border-radius: 8px !important;
+    gap: 2px !important;
+    padding: 2px !important;
+  }
+
+  /* =============================== */
+  /*   PENAMBAHAN YANG KAMU MINTA   */
+  /* =============================== */
+
+  /* Perkecil angka tanggal */
+  .date-number {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+  }
+
+  /* Perkecil badge Sisa */
+  .quota-badge {
+    font-size: 7px !important;
+    padding: 1px 4px !important;
+    border-radius: 6px !important;
+    margin-top: 1px !important;
+  }
+
+  /* Perkecil label TUTUP/PENUH */
+  .tutup-badge,
+  .full-badge {
+    font-size: 5px !important;
+    padding: 1px 4px !important;
+    border-radius: 6px !important;
+    margin-top: 1px !important;
+  }
+
+  /* Jika menggunakan ::after untuk TUTUP / PENUH */
+  .calendar-cell-custom.not-available::after,
+  .calendar-cell-custom.fully-booked::after {
+    font-size: 8px !important;
+    padding: 1px 4px !important;
+    margin-top: 1px !important;
+  }
+
+  /* LEGEND */
+  .calendar-legend-container {
+    flex-direction: column !important;
+    gap: 6px !important;
+    align-items: flex-start !important;
+  }
+
+  .legend-item {
+    font-size: 12px !important;
+    margin-right: 0 !important;
+  }
+
+  .legend-box {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  /* QUOTA INFO */
+  .quota-info {
+    font-size: 12px !important;
+    padding: 10px !important;
+  }
+
+  .quota-info span.text-xl {
+    font-size: 16px !important;
+  }
+
+}

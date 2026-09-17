@@ -1,0 +1,1 @@
+import{a1 as a,r as e}from"./index-CqYFNuvE.js";var r,n;function o(){if(n)return r;n=1;var t=function(){};return r=t,r}var i=o();const c=a(i),s=e.createContext(null);s.displayName="InputGroupContext";export{s as c,c as w};
