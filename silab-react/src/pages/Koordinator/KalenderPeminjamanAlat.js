@@ -469,11 +469,58 @@ export default function KalenderPeminjamanAlat() {
         .panel-slide-animated {
           animation: panelSlideIn 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
+
+        @media (max-width: 992px) {
+          .kalender-main-flex {
+            flex-direction: column !important;
+          }
+          .kalender-col-left,
+          .kalender-col-right {
+            flex: 1 1 100% !important;
+            max-width: 100% !important;
+            width: 100% !important;
+          }
+          .kalender-koordinator-clean .ant-picker-cell-inner {
+            min-height: 56px !important;
+            height: 56px !important;
+          }
+          .kalender-koordinator-clean .ant-picker-calendar-date {
+            min-height: 56px !important;
+            height: 56px !important;
+          }
+          .kalender-header-banner {
+            padding: 20px 16px 12px !important;
+          }
+          .kalender-header-banner h2 {
+            font-size: 1.5rem !important;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .kalender-koordinator-clean .ant-picker-cell-inner {
+            min-height: 48px !important;
+            height: 48px !important;
+          }
+          .kalender-koordinator-clean .ant-picker-calendar-date {
+            min-height: 48px !important;
+            height: 48px !important;
+          }
+          .kalender-calendar-card {
+            padding: 14px 10px !important;
+          }
+          .kalender-action-btns {
+            flex-direction: column !important;
+            gap: 8px !important;
+          }
+          .kalender-action-btns button {
+            width: 100% !important;
+          }
+        }
       `}</style>
 
       <div style={{ backgroundColor: "#FAF9F8", minHeight: "100vh", paddingBottom: "48px" }}>
         {/* Subtitle Header Banner */}
-        <div style={{ padding: "28px 24px 16px", textAlign: "center" }}>
+        <div className="kalender-header-banner" style={{ padding: "28px 24px 16px", textAlign: "center" }}>
           <div
             style={{
               display: "flex",
@@ -516,6 +563,7 @@ export default function KalenderPeminjamanAlat() {
         {/* Main Content Grid: Smooth Layout Transition Container */}
         <Container fluid className="px-3 px-md-5">
           <div
+            className="kalender-main-flex"
             style={{
               display: "flex",
               gap: "24px",
@@ -525,7 +573,7 @@ export default function KalenderPeminjamanAlat() {
           >
             {/* Left Column: Ant Design Calendar (Width shrinks smoothly when panel is open) */}
             <div
-              className="calendar-transition-wrapper"
+              className="calendar-transition-wrapper kalender-col-left"
               style={{
                 flex: isPanelOpen ? "0 0 58%" : "0 0 100%",
                 maxWidth: isPanelOpen ? "58%" : "100%",
@@ -533,7 +581,7 @@ export default function KalenderPeminjamanAlat() {
               }}
             >
               <div
-                className="kalender-koordinator-clean"
+                className="kalender-koordinator-clean kalender-calendar-card"
                 style={{
                   backgroundColor: "#ffffff",
                   borderRadius: "20px",
@@ -649,7 +697,7 @@ export default function KalenderPeminjamanAlat() {
             {/* Right Column: Total Pinjaman Panel (Slides in when isPanelOpen is true) */}
             {isPanelOpen && (
               <div
-                className="panel-slide-animated"
+                className="panel-slide-animated kalender-col-right"
                 style={{
                   flex: "0 0 40%",
                   maxWidth: "40%",

@@ -173,6 +173,7 @@ export default function Pengembalian({ rentals = [], onRefresh, onReturn }) {
 
       {/* Main Table Card */}
       <div
+        className="main-table-card"
         style={{
           backgroundColor: "#ffffff",
           borderRadius: "24px",
@@ -193,7 +194,7 @@ export default function Pengembalian({ rentals = [], onRefresh, onReturn }) {
           }}
         >
           {/* Search Bar */}
-          <div style={{ maxWidth: "300px", width: "100%" }}>
+          <div style={{ flex: "1 1 200px", maxWidth: "300px", width: "100%" }}>
             <InputGroup
               style={{
                 borderRadius: "30px",
@@ -257,7 +258,7 @@ export default function Pengembalian({ rentals = [], onRefresh, onReturn }) {
         </div>
 
         {/* Table */}
-        <div className="table-responsive">
+        <div className="table-responsive" style={{ WebkitOverflowScrolling: "touch", overflowX: "auto" }}>
           <Table borderless style={{ verticalAlign: "middle", marginBottom: 0 }}>
             <thead>
               <tr
@@ -819,6 +820,25 @@ export default function Pengembalian({ rentals = [], onRefresh, onReturn }) {
           </button>
         </div>
       </Modal>
+      <style>{`
+        @media (max-width: 768px) {
+          .main-table-card {
+            padding: 16px 14px !important;
+            border-radius: 16px !important;
+          }
+          .custom-modal-clean {
+            margin: 10px !important;
+          }
+        }
+        .custom-modal-clean .modal-content {
+          border-radius: 18px !important;
+          border: none !important;
+          overflow: hidden !important;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18) !important;
+          background-color: #ffffff !important;
+        }
+        .custom-modal-narrow { max-width: 440px !important; }
+      `}</style>
     </div>
   );
 }

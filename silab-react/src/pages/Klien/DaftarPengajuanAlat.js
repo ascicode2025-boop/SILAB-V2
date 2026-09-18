@@ -92,6 +92,29 @@ const DaftarPengajuanAlat = () => {
 
   return (
     <NavbarLoginKlien>
+      <style>{`
+        .pengajuan-title { font-size: 1.9rem; }
+        .tab-btn { padding: 8px 24px; font-size: 0.9rem; }
+        .cart-banner { flex-direction: row; }
+        @media (max-width: 768px) {
+          .pengajuan-title { font-size: 1.4rem !important; }
+          .tab-btn { padding: 6px 14px !important; font-size: 0.8rem !important; }
+          .cart-banner { flex-direction: column !important; align-items: stretch !important; text-align: center; }
+          .cart-banner > div { align-items: center !important; flex-direction: column !important; gap: 8px !important; }
+          .cart-banner button { align-self: stretch !important; justify-content: center; margin-top: 8px; }
+          .pengajuan-card .card-body { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; }
+          .pengajuan-card .card-body > div:last-child { 
+            width: 100%; 
+            flex-direction: column-reverse !important; 
+            align-items: flex-end !important; 
+            gap: 16px !important; 
+          }
+          .pengajuan-card .card-body > div:last-child > button {
+            width: 100%;
+            justify-content: center;
+          }
+        }
+      `}</style>
       <Container
         fluid
         className="py-5 px-3 px-md-5"
@@ -124,9 +147,8 @@ const DaftarPengajuanAlat = () => {
               SILAB-NTDK SYSTEM
             </span>
             <h2
-              className="fw-bold text-dark mt-1 mb-1"
+              className="fw-bold text-dark mt-1 mb-1 pengajuan-title"
               style={{
-                fontSize: "1.9rem",
                 color: "#2D3436",
               }}
             >
@@ -140,7 +162,7 @@ const DaftarPengajuanAlat = () => {
           {/* Cart Reminder Banner */}
           {cartCount > 0 && (
             <div
-              className="p-3 mb-4 d-flex flex-wrap align-items-center justify-content-between gap-3"
+              className="p-3 mb-4 d-flex flex-wrap align-items-center justify-content-between gap-3 cart-banner"
               style={{
                 backgroundColor: "#543D31",
                 color: "#ffffff",
@@ -206,14 +228,13 @@ const DaftarPengajuanAlat = () => {
                   key={tab.key}
                   type="button"
                   title={tab.title}
+                  className="tab-btn"
                   onClick={() => setActiveTab(tab.key)}
                   style={{
                     backgroundColor: isActive ? "#8D6E63" : "#FFFFFF",
                     color: isActive ? "#FFFFFF" : "#424242",
                     border: isActive ? "none" : "1.5px solid #D0D0D0",
                     borderRadius: "30px",
-                    padding: "8px 24px",
-                    fontSize: "0.9rem",
                     fontWeight: 600,
                     cursor: "pointer",
                     boxShadow: isActive
@@ -330,7 +351,7 @@ const DaftarPengajuanAlat = () => {
                               <FaTrash size={12} className="me-2 mb-1" /> Hapus
                             </button>
                           )}
-                          <div className="d-flex flex-column align-items-sm-end gap-1">
+                          <div className="d-flex flex-column align-items-end gap-1">
                             <span
                               className="badge"
                               style={{

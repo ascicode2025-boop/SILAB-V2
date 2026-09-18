@@ -677,7 +677,7 @@ const PengajuanPeminjamanAlat = () => {
                           )}
 
                           {/* Quantity and Price Row */}
-                          <div className="d-flex align-items-center justify-content-between pt-1 px-1">
+                          <div className="d-flex flex-wrap align-items-center justify-content-between pt-1 px-1 gap-2">
                             <div className="d-flex align-items-center gap-2">
                               <span className="text-muted" style={{ fontSize: "0.8rem", fontWeight: "600" }}>
                                 Jumlah:

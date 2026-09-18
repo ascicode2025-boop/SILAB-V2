@@ -172,6 +172,42 @@ const DaftarAlat = () => {
 
   return (
     <NavbarLoginKlien>
+      <style>{`
+        .daftar-alat-title {
+          font-size: 2rem;
+        }
+        .floating-cart-wrapper {
+          position: fixed;
+          bottom: 30px;
+          right: 30px;
+          z-index: 1000;
+          animation: bounceIn 0.4s ease;
+        }
+        .floating-cart-btn {
+          padding: 12px 24px;
+          font-size: 0.92rem;
+        }
+        @media (max-width: 768px) {
+          .daftar-alat-title {
+            font-size: 1.5rem !important;
+          }
+          .floating-cart-wrapper {
+            bottom: 16px !important;
+            right: 16px !important;
+          }
+          .floating-cart-btn {
+            padding: 10px 16px !important;
+            font-size: 0.82rem !important;
+            gap: 8px !important;
+          }
+          .modal-custom-detail {
+            margin: 10px;
+          }
+          .modal-custom-detail .modal-content {
+            border-radius: 20px !important;
+          }
+        }
+      `}</style>
       <Container
         fluid
         className="py-4 px-3 px-md-5 position-relative"
@@ -230,9 +266,8 @@ const DaftarAlat = () => {
               SILAB-NTDK SYSTEM
             </span>
             <h2
-              className="fw-bold text-dark mt-1 mb-1"
+              className="fw-bold text-dark mt-1 mb-1 daftar-alat-title"
               style={{
-                fontSize: "2rem",
                 color: "#2D3436",
               }}
             >
@@ -342,25 +377,16 @@ const DaftarAlat = () => {
 
         {/* Floating Cart Button (Bottom Right) */}
         {cart.length > 0 && (
-          <div
-            style={{
-              position: "fixed",
-              bottom: "30px",
-              right: "30px",
-              zIndex: 1000,
-              animation: "bounceIn 0.4s ease",
-            }}
-          >
+          <div className="floating-cart-wrapper">
             <Button
+              className="floating-cart-btn"
               onClick={() => setShowCartModal(true)}
               style={{
                 backgroundColor: "#543D31",
                 borderColor: "#543D31",
                 color: "#FFFFFF",
                 borderRadius: "35px",
-                padding: "12px 24px",
                 fontWeight: "700",
-                fontSize: "0.92rem",
                 display: "flex",
                 alignItems: "center",
                 gap: "12px",

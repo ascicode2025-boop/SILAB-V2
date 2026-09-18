@@ -505,6 +505,29 @@ export default function ManajemenPengajuanKoordinator() {
 
   return (
     <NavbarLoginKoordinator>
+      <style>{`
+        @media (max-width: 768px) {
+          .manajemen-pengajuan-page {
+            padding: 16px 12px 40px !important;
+          }
+          .manajemen-main-card {
+            padding: 16px 14px !important;
+            border-radius: 14px !important;
+          }
+          .manajemen-tabs-bar {
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: none;
+          }
+          .manajemen-tabs-bar::-webkit-scrollbar { display: none; }
+          .manajemen-topbar-row > div {
+            width: 100%;
+          }
+          .manajemen-topbar-row .d-flex {
+            justify-content: flex-start !important;
+          }
+        }
+      `}</style>
       <div
         className="manajemen-pengajuan-page"
         style={{
@@ -517,6 +540,7 @@ export default function ManajemenPengajuanKoordinator() {
         <Container fluid className="px-0">
           {/* Main Card Container */}
           <div
+            className="manajemen-main-card"
             style={{
               backgroundColor: "#FFFFFF",
               borderRadius: "18px",
@@ -526,7 +550,7 @@ export default function ManajemenPengajuanKoordinator() {
             }}
           >
             {/* Top Bar: Search and Filter */}
-            <Row className="align-items-center mb-4 g-3">
+            <Row className="manajemen-topbar-row align-items-center mb-4 g-3">
               <Col xs={12} sm={6} md={5} lg={4}>
                 <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
                   <input
@@ -597,7 +621,7 @@ export default function ManajemenPengajuanKoordinator() {
 
             {/* Navigation Tabs */}
             <div
-              className="d-flex align-items-center mb-4 overflow-auto pb-1"
+              className="manajemen-tabs-bar d-flex align-items-center mb-4"
               style={{
                 gap: "12px",
                 borderBottom: "1px solid #EEEEEE",
@@ -685,7 +709,7 @@ export default function ManajemenPengajuanKoordinator() {
             )}
 
             {/* Main Table */}
-            <div className="table-responsive">
+            <div className="table-responsive" style={{ WebkitOverflowScrolling: "touch", overflowX: "auto" }}>
               <Table hover className="align-middle mb-0" style={{ borderCollapse: "separate", borderSpacing: "0" }}>
                 <thead>
                   <tr style={{ backgroundColor: "#F9FAFB", borderBottom: "1.5px solid #E5E7EB" }}>

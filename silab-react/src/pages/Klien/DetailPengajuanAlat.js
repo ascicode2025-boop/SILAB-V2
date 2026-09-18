@@ -89,25 +89,25 @@ const DetailPengajuanAlat = () => {
       // Ensure date format is YYYY-MM-DD
       const dateParts = tanggalPengembalian.split(" ");
       let formattedDate = "";
-      
+
       if (dateParts.length === 3) {
-          const months = {
-              "Januari": "01", "Februari": "02", "Maret": "03", "April": "04", "Mei": "05", "Juni": "06",
-              "Juli": "07", "Agustus": "08", "September": "09", "Oktober": "10", "November": "11", "Desember": "12"
-          };
-          const day = dateParts[0].padStart(2, '0');
-          const month = months[dateParts[1]];
-          const year = dateParts[2];
-          formattedDate = `${year}-${month}-${day}`;
+        const months = {
+          "Januari": "01", "Februari": "02", "Maret": "03", "April": "04", "Mei": "05", "Juni": "06",
+          "Juli": "07", "Agustus": "08", "September": "09", "Oktober": "10", "November": "11", "Desember": "12"
+        };
+        const day = dateParts[0].padStart(2, '0');
+        const month = months[dateParts[1]];
+        const year = dateParts[2];
+        formattedDate = `${year}-${month}-${day}`;
       } else {
-          // Fallback if formatting is weird
-          formattedDate = new Date().toISOString().split('T')[0];
+        // Fallback if formatting is weird
+        formattedDate = new Date().toISOString().split('T')[0];
       }
 
       const formData = new FormData();
       formData.append("tanggal_pengembalian_aktual", formattedDate);
       formData.append("kondisi_alat", kondisiAlat);
-      
+
       let finalCatatan = catatan;
       if (kondisiAlat === "Ada Kerusakan") {
         const brokenList = Object.entries(brokenQuantities)
@@ -118,7 +118,7 @@ const DetailPengajuanAlat = () => {
         }
       }
       formData.append("catatan", finalCatatan);
-      
+
       if (kondisiAlat === "Ada Kerusakan" && fotoKerusakan) {
         formData.append("foto_kerusakan", fotoKerusakan);
       }
@@ -240,62 +240,62 @@ const DetailPengajuanAlat = () => {
 
   const dataDetail = rental
     ? {
-        noPengajuan: `PJ-${String(rental.id).padStart(3, "0")}`,
-        tanggalPengajuan: rental.created_at
-          ? new Date(rental.created_at).toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" })
-          : "-",
-        statusPeminjaman:
-          rental.status === "pending"
-            ? "Menunggu Verifikasi"
-            : rental.status === "disetujui_koordinator" || rental.status === "disetujui"
+      noPengajuan: `PJ-${String(rental.id).padStart(3, "0")}`,
+      tanggalPengajuan: rental.created_at
+        ? new Date(rental.created_at).toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" })
+        : "-",
+      statusPeminjaman:
+        rental.status === "pending"
+          ? "Menunggu Verifikasi"
+          : rental.status === "disetujui_koordinator" || rental.status === "disetujui"
             ? "Disetujui Koordinator"
             : rental.status === "siap_diambil"
-            ? "Siap Diambil"
-            : rental.status === "aktif"
-            ? "Alat Sedang Dipinjam"
-            : rental.status === "menunggu_pengembalian"
-            ? "Menunggu Konfirmasi Pengembalian"
-            : rental.status === "ditolak"
-            ? "Ditolak"
-            : rental.status === "menunggu_pembayaran_denda"
-            ? "Menunggu Pembayaran Denda"
-            : rental.status === "dibatalkan"
-            ? "Dibatalkan"
-            : rental.status === "selesai"
-            ? "Selesai"
-            : rental.status,
-        alat: groupedInstruments.length > 0 
-          ? groupedInstruments.map(g => `${g.count}x ${g.name}`).join(", ") 
-          : "Alat Analisis",
-        jumlah: `${rental.instruments?.length || 1} Unit`,
-        keperluan: rental.tujuan_peminjaman || rental.kegiatan_penelitian || "-",
-        tanggalPinjam: rental.tanggal_peminjaman || "-",
-        tanggalKembali: rental.tanggal_pengembalian || "-",
-        statusPengembalian: 
-          rental.status === "selesai" 
-            ? "SUDAH DIKEMBALIKAN" 
-            : rental.status === "menunggu_pengembalian"
+              ? "Siap Diambil"
+              : rental.status === "aktif"
+                ? "Alat Sedang Dipinjam"
+                : rental.status === "menunggu_pengembalian"
+                  ? "Menunggu Konfirmasi Pengembalian"
+                  : rental.status === "ditolak"
+                    ? "Ditolak"
+                    : rental.status === "menunggu_pembayaran_denda"
+                      ? "Menunggu Pembayaran Denda"
+                      : rental.status === "dibatalkan"
+                        ? "Dibatalkan"
+                        : rental.status === "selesai"
+                          ? "Selesai"
+                          : rental.status,
+      alat: groupedInstruments.length > 0
+        ? groupedInstruments.map(g => `${g.count}x ${g.name}`).join(", ")
+        : "Alat Analisis",
+      jumlah: `${rental.instruments?.length || 1} Unit`,
+      keperluan: rental.tujuan_peminjaman || rental.kegiatan_penelitian || "-",
+      tanggalPinjam: rental.tanggal_peminjaman || "-",
+      tanggalKembali: rental.tanggal_pengembalian || "-",
+      statusPengembalian:
+        rental.status === "selesai"
+          ? "SUDAH DIKEMBALIKAN"
+          : rental.status === "menunggu_pengembalian"
             ? "MENUNGGU VERIFIKASI"
             : statusPengembalian,
-        statusBebasLab:
-          (rental.status_pembayaran === "lunas" || rental.status_pembayaran === "tidak_perlu") && rental.status === "selesai"
-            ? "Tersedia untuk diunduh."
-            : "Belum tersedia.",
-        activeStep: calculateStep(rental.status),
-      }
+      statusBebasLab:
+        (rental.status_pembayaran === "lunas" || rental.status_pembayaran === "tidak_perlu") && rental.status === "selesai"
+          ? "Tersedia untuk diunduh."
+          : "Belum tersedia.",
+      activeStep: calculateStep(rental.status),
+    }
     : {
-        noPengajuan: id ? `PJ-${String(id).padStart(3, "0")}` : "PJ-2026-001",
-        tanggalPengajuan: "-",
-        statusPeminjaman: "Menunggu Verifikasi",
-        alat: "Micropipette 20–200 µL",
-        jumlah: "1 Unit",
-        keperluan: "-",
-        tanggalPinjam: "-",
-        tanggalKembali: "-",
-        statusPengembalian: statusPengembalian,
-        statusBebasLab: "Belum tersedia.",
-        activeStep: 1,
-      };
+      noPengajuan: id ? `PJ-${String(id).padStart(3, "0")}` : "PJ-2026-001",
+      tanggalPengajuan: "-",
+      statusPeminjaman: "Menunggu Verifikasi",
+      alat: "Micropipette 20–200 µL",
+      jumlah: "1 Unit",
+      keperluan: "-",
+      tanggalPinjam: "-",
+      tanggalKembali: "-",
+      statusPengembalian: statusPengembalian,
+      statusBebasLab: "Belum tersedia.",
+      activeStep: 1,
+    };
 
   const steps = [
     {
@@ -354,7 +354,7 @@ const DetailPengajuanAlat = () => {
   const LINE_COLOR_ACTIVE = "#2C2C2C";
   const LINE_COLOR_INACTIVE = "#CFCFCF";
 
-    const getStatusBadge = (status) => {
+  const getStatusBadge = (status) => {
     switch (status?.toLowerCase()) {
       case "pending":
       case "menunggu_verifikasi":
@@ -505,6 +505,69 @@ const DetailPengajuanAlat = () => {
 
   return (
     <NavbarLoginKlien>
+      <style>{`
+        .info-grid-row1 {
+          display: grid;
+          grid-template-columns: 1.4fr 0.7fr 1.5fr;
+          gap: 8px 16px;
+          margin-bottom: 20px;
+        }
+        .info-grid-row2 {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 24px;
+        }
+        .info-grid-row2 > div {
+          flex: 1 1 120px;
+        }
+        .bottom-cards-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+          align-items: start;
+        }
+        @media (max-width: 768px) {
+          .info-grid-row1 {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+          }
+          .info-grid-row2 {
+            grid-template-columns: 1fr !important;
+          }
+          .stepper-circle {
+            width: 40px !important;
+            height: 40px !important;
+          }
+          .stepper-circle svg {
+            width: 16px !important;
+            height: 16px !important;
+          }
+          .stepper-line {
+            top: 28px !important;
+          }
+          .stepper-label {
+            font-size: 0.65rem !important;
+            max-width: 80px !important;
+          }
+          .stepper-wrapper {
+            overflow-x: auto;
+            padding-bottom: 12px;
+          }
+          .stepper-inner {
+            min-width: 480px; /* Ensure labels and circles don't squish */
+          }
+          .bottom-cards-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .header-actions {
+            justify-content: center !important;
+            flex-direction: column;
+          }
+          .header-actions button {
+            width: 100%;
+          }
+        }
+      `}</style>
       <div style={styles.page}>
         <div style={styles.inner}>
           {/* Back Button */}
@@ -550,9 +613,9 @@ const DetailPengajuanAlat = () => {
                 </div>
               </div>
 
-          {/* Action Buttons in Header */}
+              {/* Action Buttons in Header */}
               {rental?.status === "pending" && (
-                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-end", marginTop: "16px", gap: "10px" }}>
+                <div className="header-actions" style={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-end", marginTop: "16px", gap: "10px" }}>
                   <button
                     onClick={() => {
                       const text = `Halo Koordinator SILAB-NTDK, saya ingin verifikasi pengajuan peminjaman alat dengan nomor ${dataDetail.noPengajuan}. Mohon diproses, terima kasih.`;
@@ -591,7 +654,7 @@ const DetailPengajuanAlat = () => {
                 </div>
               )}
               {rental?.status === "ditolak" && (
-                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-end", marginTop: "16px", gap: "10px" }}>
+                <div className="header-actions" style={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-end", marginTop: "16px", gap: "10px" }}>
                   <button
                     onClick={() => history.push("/dashboard/pengajuanPeminjaman")}
                     style={{
@@ -638,14 +701,7 @@ const DetailPengajuanAlat = () => {
 
             <div style={{ padding: "20px 24px 24px" }}>
               {/* Row 1: Alat, Jumlah, Keperluan */}
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1.4fr 0.7fr 1.5fr",
-                  gap: "8px 16px",
-                  marginBottom: "20px",
-                }}
-              >
+              <div className="info-grid-row1">
                 <div>
                   <div style={styles.labelSmall}>Alat</div>
                   <div style={styles.valueNormal}>{dataDetail.alat}</div>
@@ -660,13 +716,7 @@ const DetailPengajuanAlat = () => {
                 </div>
               </div>
               {/* Row 2: Tanggal Pinjam, Tanggal Kembali */}
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "8px 16px",
-                }}
-              >
+              <div className="info-grid-row2">
                 <div>
                   <div style={styles.labelSmall}>Tanggal Pinjam</div>
                   <div style={styles.valueNormal}>{dataDetail.tanggalPinjam}</div>
@@ -684,10 +734,12 @@ const DetailPengajuanAlat = () => {
             <div style={{ ...styles.cardBody, padding: "20px 24px 28px" }}>
               <div style={styles.sectionTitle}>Status Pengajuan</div>
 
-              {/* Stepper container */}
-              <div style={{ position: "relative", padding: "8px 0 0" }}>
+              <div className="stepper-wrapper">
+                {/* Stepper container */}
+                <div className="stepper-inner" style={{ position: "relative", padding: "8px 0 0" }}>
                 {/* Background Line (between first and last circle centers) */}
                 <div
+                  className="stepper-line"
                   style={{
                     position: "absolute",
                     top: `${CIRCLE_SIZE / 2 + 8}px`,
@@ -701,6 +753,7 @@ const DetailPengajuanAlat = () => {
                 />
                 {/* Active Line */}
                 <div
+                  className="stepper-line"
                   style={{
                     position: "absolute",
                     top: `${CIRCLE_SIZE / 2 + 8}px`,
@@ -739,16 +792,17 @@ const DetailPengajuanAlat = () => {
                       >
                         {/* Circle */}
                         <div
+                          className="stepper-circle"
                           style={{
                             width: `${CIRCLE_SIZE}px`,
                             height: `${CIRCLE_SIZE}px`,
                             borderRadius: "50%",
-                            backgroundColor: isActive 
-                              ? (rental?.status === "ditolak" && stepNum === 2 
-                                  ? "#DC2626" 
-                                  : (rental?.status === "menunggu_pembayaran_denda" && stepNum === 5
-                                      ? "#E65100" // Orange for denda
-                                      : ACTIVE_COLOR)) 
+                            backgroundColor: isActive
+                              ? (rental?.status === "ditolak" && stepNum === 2
+                                ? "#DC2626"
+                                : (rental?.status === "menunggu_pembayaran_denda" && stepNum === 5
+                                  ? "#E65100" // Orange for denda
+                                  : ACTIVE_COLOR))
                               : INACTIVE_COLOR,
                             display: "flex",
                             alignItems: "center",
@@ -764,6 +818,7 @@ const DetailPengajuanAlat = () => {
                         </div>
                         {/* Label */}
                         <div
+                          className="stepper-label"
                           style={{
                             fontSize: "0.72rem",
                             fontWeight: 600,
@@ -782,6 +837,7 @@ const DetailPengajuanAlat = () => {
                 </div>
               </div>
             </div>
+            </div>
           </div>
 
           {/* ─── Card Pembayaran ─── */}
@@ -797,15 +853,15 @@ const DetailPengajuanAlat = () => {
                         rental.status_pembayaran === "lunas" || ["disetujui", "siap_diambil", "aktif", "menunggu_pengembalian", "selesai", "menunggu_pembayaran_denda"].includes(rental.status)
                           ? styles.greenBadge
                           : rental.status_pembayaran === "menunggu"
-                          ? { ...styles.greenBadge, backgroundColor: "#FFF3E0", color: "#E65100" }
-                          : styles.redBadge
+                            ? { ...styles.greenBadge, backgroundColor: "#FFF3E0", color: "#E65100" }
+                            : styles.redBadge
                       }
                     >
                       {rental.status_pembayaran === "lunas" || ["disetujui", "siap_diambil", "aktif", "menunggu_pengembalian", "selesai", "menunggu_pembayaran_denda"].includes(rental.status)
                         ? "Disetujui"
                         : rental.status_pembayaran === "menunggu"
-                        ? "Menunggu Konfirmasi"
-                        : "Belum Dibayar"}
+                          ? "Menunggu Konfirmasi"
+                          : "Belum Dibayar"}
                     </span>
                     {rental.alasan_penolakan_pembayaran && rental.status_pembayaran === "belum_lunas" && (
                       <div style={{ marginTop: "8px", fontSize: "0.8rem", color: "#D32F2F" }}>
@@ -880,15 +936,15 @@ const DetailPengajuanAlat = () => {
                         rental.status_denda === "lunas" || rental.status === "selesai"
                           ? styles.greenBadge
                           : rental.status_denda === "menunggu" || (rental.status_denda === "belum_dibayar" && rental.denda_payment_proof_path)
-                          ? { ...styles.greenBadge, backgroundColor: "#FFF3E0", color: "#E65100" }
-                          : styles.redBadge
+                            ? { ...styles.greenBadge, backgroundColor: "#FFF3E0", color: "#E65100" }
+                            : styles.redBadge
                       }
                     >
                       {rental.status_denda === "lunas" || rental.status === "selesai"
                         ? "Lunas"
                         : rental.status_denda === "menunggu" || (rental.status_denda === "belum_dibayar" && rental.denda_payment_proof_path)
-                        ? "Menunggu Verifikasi"
-                        : "Belum Dibayar"}
+                          ? "Menunggu Verifikasi"
+                          : "Belum Dibayar"}
                     </span>
                     <div style={{ marginTop: "8px", fontSize: "0.85rem", fontWeight: "bold" }}>
                       Nominal: Rp {rental.denda.toLocaleString("id-ID")}
@@ -975,14 +1031,7 @@ const DetailPengajuanAlat = () => {
           )}
 
           {/* ─── Card 4 & 5: Bottom Row ─── */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "16px",
-              alignItems: "start"
-            }}
-          >
+          <div className="bottom-cards-grid">
             {/* Pengembalian */}
             <div style={styles.card}>
               <div style={{ ...styles.cardBody, padding: "20px" }}>
@@ -1011,15 +1060,15 @@ const DetailPengajuanAlat = () => {
                     rental?.status === "aktif" && statusPengembalian === "BELUM DIKEMBALIKAN"
                       ? styles.redBadge
                       : (rental?.status === "selesai" || statusPengembalian !== "BELUM DIKEMBALIKAN")
-                      ? styles.greenBadge
-                      : { ...styles.redBadge, backgroundColor: "#E0E0E0", color: "#757575" }
+                        ? styles.greenBadge
+                        : { ...styles.redBadge, backgroundColor: "#E0E0E0", color: "#757575" }
                   }
                 >
                   {rental?.status === "selesai"
                     ? "SUDAH DIKEMBALIKAN"
                     : (rental?.status === "aktif" || rental?.status === "menunggu_pengembalian")
-                    ? dataDetail.statusPengembalian
-                    : "BELUM DIAMBIL"}
+                      ? dataDetail.statusPengembalian
+                      : "BELUM DIAMBIL"}
                 </span>
                 <button
                   style={{
@@ -1039,8 +1088,8 @@ const DetailPengajuanAlat = () => {
                   {rental?.status === "selesai" || dataDetail.statusPengembalian !== "BELUM DIKEMBALIKAN"
                     ? "Pengembalian Diajukan"
                     : rental?.status === "aktif"
-                    ? "Ajukan Pengembalian"
-                    : "Menunggu Pengambilan"}
+                      ? "Ajukan Pengembalian"
+                      : "Menunggu Pengambilan"}
                 </button>
 
                 {/* Show Return Info if already submitted */}
@@ -1049,17 +1098,17 @@ const DetailPengajuanAlat = () => {
                     <div style={{ fontSize: "0.85rem", fontWeight: "700", color: "#333", marginBottom: "8px" }}>Detail yang Diajukan:</div>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", fontSize: "0.8rem", color: "#616161" }}>
                       <div>
-                        <strong>Tanggal:</strong><br/>
+                        <strong>Tanggal:</strong><br />
                         <span style={{ color: "#000" }}>{rental.client_return_date}</span>
                       </div>
                       <div>
-                        <strong>Kondisi:</strong><br/>
+                        <strong>Kondisi:</strong><br />
                         <span style={{ color: "#000" }}>{rental.client_return_condition || "-"}</span>
                       </div>
                     </div>
                     {rental.client_return_notes && (
                       <div style={{ marginTop: "8px", fontSize: "0.8rem", color: "#616161", whiteSpace: "pre-line" }}>
-                        <strong>Catatan:</strong><br/>
+                        <strong>Catatan:</strong><br />
                         <span style={{ color: "#000" }}>{rental.client_return_notes}</span>
                       </div>
                     )}
@@ -1117,7 +1166,7 @@ const DetailPengajuanAlat = () => {
                   {dataDetail.statusBebasLab === "Tersedia untuk diunduh." ? (
                     <>
                       <div className="text-success mb-2 fw-bold">Tersedia</div>
-                      <button 
+                      <button
                         className="btn btn-sm btn-outline-success rounded-pill px-3"
                         onClick={() => setShowModalBebasLab(true)}
                       >

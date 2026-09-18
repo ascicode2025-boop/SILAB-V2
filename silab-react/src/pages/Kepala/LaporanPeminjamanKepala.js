@@ -241,7 +241,55 @@ export default function LaporanPeminjamanKepala() {
 
   return (
     <NavbarLoginKepala>
+      <style>{`
+        @media (max-width: 768px) {
+          .laporan-page-wrap {
+            padding: 16px 12px 40px !important;
+          }
+          .laporan-topbar {
+            flex-direction: column !important;
+            align-items: stretch !important;
+          }
+          .laporan-topbar > div {
+            width: 100%;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+          }
+          .laporan-filters-group {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 10px !important;
+            width: 100%;
+          }
+          .laporan-filters-group > div {
+            width: 100%;
+          }
+          .laporan-filters-group .form-select {
+            width: 100% !important;
+          }
+          .laporan-search-box {
+            width: 100% !important;
+          }
+          .laporan-tabs-bar {
+            overflow-x: auto;
+            flex-wrap: nowrap !important;
+            scrollbar-width: none;
+            padding-bottom: 4px;
+          }
+          .laporan-tabs-bar::-webkit-scrollbar { display: none; }
+          .laporan-card {
+            padding: 16px 14px !important;
+          }
+        }
+        @media (max-width: 992px) {
+          .laporan-top3-grid {
+            grid-template-columns: 1fr !important;
+            gap: 12px !important;
+          }
+        }
+      `}</style>
       <div
+        className="laporan-page-wrap"
         style={{
           backgroundColor: "#FAF8F7",
           minHeight: "calc(100vh - 70px)",
@@ -251,7 +299,7 @@ export default function LaporanPeminjamanKepala() {
       >
         <Container fluid className="px-0">
           {/* ===== 1. TOP BAR: EXPORT BUTTONS & DROPDOWN FILTERS ===== */}
-          <div className="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+          <div className="laporan-topbar d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
             <div className="d-flex align-items-center gap-2">
               <Button
                 onClick={() => handleOpenExportModal("PDF")}
@@ -275,7 +323,7 @@ export default function LaporanPeminjamanKepala() {
             </div>
 
             {/* Filters on Right */}
-            <div className="d-flex align-items-center gap-3">
+            <div className="laporan-filters-group d-flex align-items-center gap-3">
               {/* Periode Filter */}
               <div className="d-flex align-items-center gap-2">
                 <span style={{ fontSize: "0.85rem", fontWeight: 600, color: "#4A3F3B" }}>Periode</span>
@@ -345,7 +393,7 @@ export default function LaporanPeminjamanKepala() {
           </div>
 
           {/* ===== 2. TAB PILLS ===== */}
-          <div className="d-flex flex-wrap gap-2 mb-4">
+          <div className="laporan-tabs-bar d-flex flex-wrap gap-2 mb-4">
             {[
               { key: "peminjaman", label: "Peminjaman" },
               { key: "pengembalian", label: "Pengembalian" },
@@ -392,7 +440,7 @@ export default function LaporanPeminjamanKepala() {
                 </p>
 
                 {/* Search Bar */}
-                <div style={{ position: "relative", width: "220px", marginBottom: "16px" }}>
+                <div className="laporan-search-box" style={{ position: "relative", marginBottom: "16px" }}>
                   <Form.Control
                     type="text"
                     placeholder="Cari..."
@@ -446,7 +494,7 @@ export default function LaporanPeminjamanKepala() {
                       }
 
                       return (
-                        <tr key={item.id} style={{ borderBottom: "1px solid #F8F5F4" }}>
+                        <tr key={item.noPengajuan} style={{ borderBottom: "1px solid #F8F5F4" }}>
                           <td className="py-3" style={{ color: "#4A3F3B", fontSize: "0.9rem" }}>{idx + 1}</td>
                           <td className="py-3 fw-medium" style={{ color: "#4A3F3B", fontSize: "0.9rem" }}>{item.noPengajuan}</td>
                           <td className="py-3" style={{ color: "#4A3F3B", fontSize: "0.9rem" }}>{item.namaPeminjam}</td>
@@ -490,7 +538,7 @@ export default function LaporanPeminjamanKepala() {
                 </p>
 
                 {/* Search Bar */}
-                <div style={{ position: "relative", width: "220px", marginBottom: "16px" }}>
+                <div className="laporan-search-box" style={{ position: "relative", marginBottom: "16px" }}>
                   <Form.Control
                     type="text"
                     placeholder="Cari..."
@@ -577,7 +625,7 @@ export default function LaporanPeminjamanKepala() {
                 </p>
 
                 {/* Search Bar */}
-                <div style={{ position: "relative", width: "220px", marginBottom: "16px" }}>
+                <div className="laporan-search-box" style={{ position: "relative", marginBottom: "16px" }}>
                   <Form.Control
                     type="text"
                     placeholder="Cari..."

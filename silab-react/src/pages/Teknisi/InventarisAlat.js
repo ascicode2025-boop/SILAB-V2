@@ -257,6 +257,20 @@ export default function InventarisAlat() {
 
   return (
     <NavbarLoginTeknisi>
+      <style>{`
+        @media (max-width: 992px) {
+          .modal-custom-detail {
+            margin: 10px;
+          }
+          .modal-custom-detail .modal-content {
+            border-radius: 20px !important;
+          }
+        }
+        .table-responsive {
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+      `}</style>
       <div
         style={{
           minHeight: "100vh",

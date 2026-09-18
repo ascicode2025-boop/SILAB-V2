@@ -50,14 +50,14 @@ export default function PersiapkanAlat({ rentals, onRefresh, onReadyPickup }) {
       </div>
 
       {/* Main Table Card */}
-      <div style={{
+      <div className="main-table-card" style={{
         backgroundColor: "#ffffff",
         borderRadius: "24px",
         padding: "28px 32px",
         boxShadow: "0 6px 24px rgba(0,0,0,0.05)",
         border: "1px solid #EAEAEA",
       }}>
-        <div className="table-responsive">
+        <div className="table-responsive" style={{ WebkitOverflowScrolling: "touch", overflowX: "auto" }}>
           <Table borderless style={{ verticalAlign: "middle", marginBottom: 0 }}>
             <thead>
               <tr style={{ color: "#212121", fontSize: "0.95rem", fontWeight: "700", borderBottom: "1px solid #EEEEEE" }}>
@@ -129,6 +129,12 @@ export default function PersiapkanAlat({ rentals, onRefresh, onReadyPickup }) {
 
       {/* Styles */}
       <style>{`
+        @media (max-width: 768px) {
+          .main-table-card {
+            padding: 16px 14px !important;
+            border-radius: 16px !important;
+          }
+        }
         .custom-modal-clean .modal-content {
           border-radius: 18px !important;
           border: none !important;

@@ -104,6 +104,7 @@ export default function SiapDiambil({ rentals, onRefresh, onHandover }) {
 
       {/* Main Table Card */}
       <div
+        className="main-table-card"
         style={{
           backgroundColor: "#ffffff",
           borderRadius: "24px",
@@ -112,7 +113,7 @@ export default function SiapDiambil({ rentals, onRefresh, onHandover }) {
           border: "1px solid #EAEAEA",
         }}
       >
-        <div className="table-responsive">
+        <div className="table-responsive" style={{ WebkitOverflowScrolling: "touch", overflowX: "auto" }}>
           <Table borderless style={{ verticalAlign: "middle", marginBottom: 0 }}>
             <thead>
               <tr
@@ -202,6 +203,15 @@ export default function SiapDiambil({ rentals, onRefresh, onHandover }) {
 
       {/* ─── 1. MODAL DETAIL ALAT (SERAH TERIMA) ─── */}
       <style>{`
+        @media (max-width: 768px) {
+          .main-table-card {
+            padding: 16px 14px !important;
+            border-radius: 16px !important;
+          }
+          .custom-modal-clean {
+            margin: 10px !important;
+          }
+        }
         .custom-modal-clean .modal-content {
           border-radius: 18px !important;
           border: none !important;

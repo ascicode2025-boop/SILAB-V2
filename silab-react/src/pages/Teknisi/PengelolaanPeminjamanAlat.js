@@ -78,6 +78,22 @@ export default function PengelolaanPeminjamanAlat() {
 
   return (
     <NavbarLoginTeknisi>
+      <style>{`
+        @media (max-width: 768px) {
+          .nav-tabs-wrapper {
+            flex-wrap: wrap !important;
+            gap: 8px !important;
+            margin-bottom: 24px !important;
+            justify-content: center;
+          }
+          .nav-tabs-wrapper button {
+            flex: 1 1 calc(50% - 8px);
+            padding: 8px 12px !important;
+            font-size: 0.8rem !important;
+            text-align: center;
+          }
+        }
+      `}</style>
       <div
         style={{
           minHeight: "100vh",
@@ -89,6 +105,7 @@ export default function PengelolaanPeminjamanAlat() {
         <Container fluid>
           {/* Top Pill Navigation Tabs */}
           <div
+            className="nav-tabs-wrapper"
             style={{
               display: "flex",
               alignItems: "center",
