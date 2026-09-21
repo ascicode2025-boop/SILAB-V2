@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Table, Modal } from "react-bootstrap";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function PersiapkanAlat({ rentals, onRefresh, onReadyPickup }) {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -12,6 +13,22 @@ export default function PersiapkanAlat({ rentals, onRefresh, onReadyPickup }) {
   const handleOpenConfirm = (item) => {
     setSelectedItem(item);
     setShowConfirmModal(true);
+  };
+
+    const handleWhatsApp = () => {
+    if (!selectedItem || !selectedItem.user) return;
+    const phone = selectedItem.user.nomor_telpon;
+    if (!phone) {
+      alert("Nomor telepon tidak tersedia.");
+      return;
+    }
+    let formattedPhone = phone;
+    if (formattedPhone.startsWith("0")) {
+      formattedPhone = "62" + formattedPhone.substring(1);
+    }
+    const text = "Halo " + selectedItem.user.name + ",\n\nAlat yang Anda pinjam dengan No. Pengajuan *" + selectedItem.rental_number + "* telah disiapkan dan berstatus *Siap Diambil*.\n\nSilakan datang ke Laboratorium untuk mengambil alat tersebut pada tanggal *" + selectedItem.start_date + "*.\n\nTerima kasih.";
+    const url = "https://wa.me/" + formattedPhone + "?text=" + encodeURIComponent(text);
+    window.open(url, "_blank");
   };
 
   const handleTandaiSiapDiambil = async () => {
@@ -171,13 +188,13 @@ export default function PersiapkanAlat({ rentals, onRefresh, onReadyPickup }) {
               <div>
                 <div style={{ fontWeight: "700", color: "#757575", fontSize: "0.85rem", marginBottom: "4px" }}>Alat</div>
                 <div style={{ color: "#212121", fontSize: "0.92rem", fontWeight: "600", lineHeight: "1.3" }}>
-                  {selecteditem.groupedItems?.map((i) => i.instrument?.name).join(", ")}
+                  {selectedItem.groupedItems?.map((i) => i.instrument?.name).join(", ")}
                 </div>
               </div>
               <div>
                 <div style={{ fontWeight: "700", color: "#757575", fontSize: "0.85rem", marginBottom: "4px" }}>Jumlah</div>
                 <div style={{ color: "#212121", fontSize: "0.92rem", fontWeight: "600" }}>
-                  {selecteditem.groupedItems?.reduce((t, i) => t + i.quantity, 0)} Unit
+                  {selectedItem.groupedItems?.reduce((t, i) => t + i.quantity, 0)} Unit
                 </div>
               </div>
               <div>
@@ -248,3 +265,4 @@ export default function PersiapkanAlat({ rentals, onRefresh, onReadyPickup }) {
     </div>
   );
 }
+

@@ -1,0 +1,9 @@
+# Root
+.vscode/
+node_modules/
+package-lock.json
+.env
+
+# OS
+.DS_Store
+Thumbs.db

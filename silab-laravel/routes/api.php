@@ -107,18 +107,19 @@ Route::middleware('auth:sanctum')->group(function () {
         // Send invoice PDF to client via email
         Route::post('/invoices/{id}/send-email', [\App\Http\Controllers\Api\InvoiceController::class, 'sendToClient']);
 
-    // User management for admin
-    Route::get('/users', [\App\Http\Controllers\Api\UserController::class, 'index']);
-    Route::post('/users', [\App\Http\Controllers\Api\UserController::class, 'store']);
-    Route::patch('/users/{id}', [\App\Http\Controllers\Api\UserController::class, 'update']);
+    // User management (koordinator only)
+    Route::middleware('role:koordinator')->group(function () {
+        Route::get('/users', [\App\Http\Controllers\Api\UserController::class, 'index']);
+        Route::post('/users', [\App\Http\Controllers\Api\UserController::class, 'store']);
+        Route::patch('/users/{id}', [\App\Http\Controllers\Api\UserController::class, 'update']);
+    });
 
-    // ==========================================
-    // INSTRUMENTS (Peminjaman Alat) ROUTES
-    // ==========================================
-    Route::post('/instruments', [\App\Http\Controllers\Api\InstrumentController::class, 'store']);
-    Route::put('/instruments/{id}', [\App\Http\Controllers\Api\InstrumentController::class, 'update']);
-    Route::delete('/instruments/{id}', [\App\Http\Controllers\Api\InstrumentController::class, 'destroy']);
-
+    // INSTRUMENTS (Peminjaman Alat) ROUTES - teknisi & koordinator only
+    Route::middleware('role:teknisi,koordinator')->group(function () {
+        Route::post('/instruments', [\App\Http\Controllers\Api\InstrumentController::class, 'store']);
+        Route::put('/instruments/{id}', [\App\Http\Controllers\Api\InstrumentController::class, 'update']);
+        Route::delete('/instruments/{id}', [\App\Http\Controllers\Api\InstrumentController::class, 'destroy']);
+    });
     Route::get('/rentals', [\App\Http\Controllers\Api\InstrumentRentalController::class, 'index']);
     Route::get('/rentals/closed-dates', [\App\Http\Controllers\Api\InstrumentRentalController::class, 'getClosedDates']);
     Route::post('/rentals/closed-dates', [\App\Http\Controllers\Api\InstrumentRentalController::class, 'storeClosedDate']);

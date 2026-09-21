@@ -262,10 +262,10 @@ const DaftarAlatSebelumLogin = () => {
                 <Row className="mb-3 text-center">
                   <Col xs={6}>
                     <div className="fw-bold mb-1" style={{ color: "#3E2723", fontSize: "0.9rem" }}>
-                      Total Unit
+                      Stok Tersedia
                     </div>
                     <div className="text-secondary fw-semibold" style={{ fontSize: "0.82rem" }}>
-                      {selectedTool.total_unit ?? 1} Unit
+                      {selectedTool.stok_tersedia ?? 1} Unit
                     </div>
                   </Col>
                   <Col xs={6}>
@@ -325,20 +325,20 @@ const DaftarAlatSebelumLogin = () => {
                   </Button>
                   <Button
                     style={{
-                      backgroundColor: (selectedTool.status === "rusak" || selectedTool.status === "perawatan" || (selectedTool.total_unit ?? 1) <= 0) ? "#D3D3D3" : "#A6867B",
-                      borderColor: (selectedTool.status === "rusak" || selectedTool.status === "perawatan" || (selectedTool.total_unit ?? 1) <= 0) ? "#D3D3D3" : "#A6867B",
+                      backgroundColor: (selectedTool.status === "rusak" || selectedTool.status === "perawatan" || (selectedTool.stok_tersedia ?? 1) <= 0) ? "#D3D3D3" : "#A6867B",
+                      borderColor: (selectedTool.status === "rusak" || selectedTool.status === "perawatan" || (selectedTool.stok_tersedia ?? 1) <= 0) ? "#D3D3D3" : "#A6867B",
                       color: "#FFFFFF",
                       borderRadius: "28px",
                       padding: "8px 22px",
                       fontWeight: "600",
                       fontSize: "0.86rem",
-                      boxShadow: (selectedTool.status === "rusak" || selectedTool.status === "perawatan" || (selectedTool.total_unit ?? 1) <= 0) ? "none" : "0 3px 8px rgba(166,134,123,0.35)",
-                      cursor: (selectedTool.status === "rusak" || selectedTool.status === "perawatan" || (selectedTool.total_unit ?? 1) <= 0) ? "not-allowed" : "pointer"
+                      boxShadow: (selectedTool.status === "rusak" || selectedTool.status === "perawatan" || (selectedTool.stok_tersedia ?? 1) <= 0) ? "none" : "0 3px 8px rgba(166,134,123,0.35)",
+                      cursor: (selectedTool.status === "rusak" || selectedTool.status === "perawatan" || (selectedTool.stok_tersedia ?? 1) <= 0) ? "not-allowed" : "pointer"
                     }}
-                    disabled={selectedTool.status === "rusak" || selectedTool.status === "perawatan" || (selectedTool.total_unit ?? 1) <= 0}
+                    disabled={selectedTool.status === "rusak" || selectedTool.status === "perawatan" || (selectedTool.stok_tersedia ?? 1) <= 0}
                     onClick={handleAjukanPeminjaman}
                   >
-                    {(selectedTool.status === "rusak" || selectedTool.status === "perawatan" || (selectedTool.total_unit ?? 1) <= 0) ? "Tidak Tersedia" : "Ajukan Peminjaman"}
+                    {(selectedTool.status === "rusak" || selectedTool.status === "perawatan" || (selectedTool.stok_tersedia ?? 1) <= 0) ? "Tidak Tersedia" : "Ajukan Peminjaman"}
                   </Button>
                 </div>
               </div>

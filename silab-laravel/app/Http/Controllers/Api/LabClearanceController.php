@@ -22,11 +22,8 @@ class LabClearanceController extends Controller
         $hasUnpaid = InstrumentRental::where('user_id', $user->id)
             ->whereNotIn('status', ['ditolak', 'dibatalkan'])
             ->where(function ($query) {
-                $query->where('status_pembayaran', 'belum_lunas')
-                      ->orWhere(function ($q) {
-                          $q->where('denda', '>', 0)
-                            ->where('status_denda', '!=', 'lunas');
-                      });
+                $query->where('denda', '>', 0)
+                      ->where('status_denda', '!=', 'lunas');
             })
             ->exists();
 
@@ -66,11 +63,8 @@ class LabClearanceController extends Controller
         $hasUnpaid = InstrumentRental::where('user_id', $user->id)
             ->whereNotIn('status', ['ditolak', 'dibatalkan'])
             ->where(function ($query) {
-                $query->where('status_pembayaran', 'belum_lunas')
-                      ->orWhere(function ($q) {
-                          $q->where('denda', '>', 0)
-                            ->where('status_denda', '!=', 'lunas');
-                      });
+                $query->where('denda', '>', 0)
+                      ->where('status_denda', '!=', 'lunas');
             })
             ->exists();
 

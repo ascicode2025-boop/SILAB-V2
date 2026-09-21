@@ -278,7 +278,7 @@ const DetailPengajuanAlat = () => {
             ? "MENUNGGU VERIFIKASI"
             : statusPengembalian,
       statusBebasLab:
-        (rental.status_pembayaran === "lunas" || rental.status_pembayaran === "tidak_perlu") && rental.status === "selesai"
+        rental.status === "selesai" && (!rental.denda || rental.denda === 0 || rental.status_denda === "lunas" || rental.status_denda === "tidak_ada")
           ? "Tersedia untuk diunduh."
           : "Belum tersedia.",
       activeStep: calculateStep(rental.status),
@@ -615,7 +615,7 @@ const DetailPengajuanAlat = () => {
 
               {/* Action Buttons in Header */}
               {rental?.status === "pending" && (
-                <div className="header-actions" style={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-end", marginTop: "16px", gap: "10px" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-end", marginTop: "16px", gap: "10px" }}>
                   <button
                     onClick={() => {
                       const text = `Halo Koordinator SILAB-NTDK, saya ingin verifikasi pengajuan peminjaman alat dengan nomor ${dataDetail.noPengajuan}. Mohon diproses, terima kasih.`;
@@ -654,7 +654,7 @@ const DetailPengajuanAlat = () => {
                 </div>
               )}
               {rental?.status === "ditolak" && (
-                <div className="header-actions" style={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-end", marginTop: "16px", gap: "10px" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-end", marginTop: "16px", gap: "10px" }}>
                   <button
                     onClick={() => history.push("/dashboard/pengajuanPeminjaman")}
                     style={{
@@ -701,7 +701,15 @@ const DetailPengajuanAlat = () => {
 
             <div style={{ padding: "20px 24px 24px" }}>
               {/* Row 1: Alat, Jumlah, Keperluan */}
-              <div className="info-grid-row1">
+              <div
+                className="info-grid-row1"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1.4fr 0.7fr 1.5fr",
+                  gap: "8px 16px",
+                  marginBottom: "20px",
+                }}
+              >
                 <div>
                   <div style={styles.labelSmall}>Alat</div>
                   <div style={styles.valueNormal}>{dataDetail.alat}</div>
@@ -716,7 +724,14 @@ const DetailPengajuanAlat = () => {
                 </div>
               </div>
               {/* Row 2: Tanggal Pinjam, Tanggal Kembali */}
-              <div className="info-grid-row2">
+              <div
+                className="info-grid-row2"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "8px 16px",
+                }}
+              >
                 <div>
                   <div style={styles.labelSmall}>Tanggal Pinjam</div>
                   <div style={styles.valueNormal}>{dataDetail.tanggalPinjam}</div>
@@ -729,15 +744,22 @@ const DetailPengajuanAlat = () => {
             </div>
           </div>
 
-          {/* ─── Card 3: Status Pengajuan Stepper ─── */}
+          {/* ─── Card 3: Tahapan Pengajuan (Stepper) ─── */}
           <div style={styles.card}>
-            <div style={{ ...styles.cardBody, padding: "20px 24px 28px" }}>
-              <div style={styles.sectionTitle}>Status Pengajuan</div>
+            <div style={{ ...styles.cardBody, padding: "24px" }}>
+              <div style={styles.sectionTitle}>Tahapan Pengajuan</div>
 
-              <div className="stepper-wrapper">
-                {/* Stepper container */}
-                <div className="stepper-inner" style={{ position: "relative", padding: "8px 0 0" }}>
-                {/* Background Line (between first and last circle centers) */}
+              {/* Stepper Container */}
+              <div
+                className="stepper-wrapper"
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  padding: "16px 0 8px",
+                }}
+              >
+                <div className="stepper-inner" style={{ position: "relative", width: "100%" }}>
+                {/* Inactive Base Line */}
                 <div
                   className="stepper-line"
                   style={{
@@ -797,12 +819,12 @@ const DetailPengajuanAlat = () => {
                             width: `${CIRCLE_SIZE}px`,
                             height: `${CIRCLE_SIZE}px`,
                             borderRadius: "50%",
-                            backgroundColor: isActive
-                              ? (rental?.status === "ditolak" && stepNum === 2
-                                ? "#DC2626"
-                                : (rental?.status === "menunggu_pembayaran_denda" && stepNum === 5
-                                  ? "#E65100" // Orange for denda
-                                  : ACTIVE_COLOR))
+                            backgroundColor: isActive 
+                              ? (rental?.status === "ditolak" && stepNum === 2 
+                                  ? "#DC2626" 
+                                  : (rental?.status === "menunggu_pembayaran_denda" && stepNum === 5
+                                      ? "#E65100" // Orange for denda
+                                      : ACTIVE_COLOR)) 
                               : INACTIVE_COLOR,
                             display: "flex",
                             alignItems: "center",
@@ -835,95 +857,11 @@ const DetailPengajuanAlat = () => {
                     );
                   })}
                 </div>
-              </div>
-            </div>
-            </div>
-          </div>
-
-          {/* ─── Card Pembayaran ─── */}
-          {rental?.status_pembayaran && rental.status_pembayaran !== "tidak_perlu" && (
-            <div style={styles.card}>
-              <div style={{ ...styles.cardBody, padding: "20px 24px" }}>
-                <div style={styles.sectionTitle}>Pembayaran Alat (Berbayar)</div>
-                <div style={{ display: "flex", gap: "16px", alignItems: "flex-start", flexWrap: "wrap" }}>
-                  <div style={{ flex: 1, minWidth: "200px" }}>
-                    <div style={styles.labelSmall}>Status Pembayaran</div>
-                    <span
-                      style={
-                        rental.status_pembayaran === "lunas" || ["disetujui", "siap_diambil", "aktif", "menunggu_pengembalian", "selesai", "menunggu_pembayaran_denda"].includes(rental.status)
-                          ? styles.greenBadge
-                          : rental.status_pembayaran === "menunggu"
-                            ? { ...styles.greenBadge, backgroundColor: "#FFF3E0", color: "#E65100" }
-                            : styles.redBadge
-                      }
-                    >
-                      {rental.status_pembayaran === "lunas" || ["disetujui", "siap_diambil", "aktif", "menunggu_pengembalian", "selesai", "menunggu_pembayaran_denda"].includes(rental.status)
-                        ? "Disetujui"
-                        : rental.status_pembayaran === "menunggu"
-                          ? "Menunggu Konfirmasi"
-                          : "Belum Dibayar"}
-                    </span>
-                    {rental.alasan_penolakan_pembayaran && rental.status_pembayaran === "belum_lunas" && (
-                      <div style={{ marginTop: "8px", fontSize: "0.8rem", color: "#D32F2F" }}>
-                        <strong>Alasan Ditolak:</strong> {rental.alasan_penolakan_pembayaran}
-                      </div>
-                    )}
-                  </div>
-
-                  {rental.payment_proof_path && (
-                    <div style={{ flex: 1, minWidth: "150px" }}>
-                      <button
-                        type="button"
-                        onClick={() => handleOpenProofModal(rental.payment_proof_path, "Bukti Pembayaran Alat")}
-                        style={{
-                          background: "none",
-                          border: "none",
-                          padding: 0,
-                          fontSize: "0.88rem",
-                          fontWeight: 600,
-                          color: "#2E7D32",
-                          textDecoration: "underline",
-                          cursor: "pointer",
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: "6px",
-                        }}
-                      >
-                        Lihat Bukti Terunggah
-                      </button>
-                    </div>
-                  )}
-
-                  {rental.status_pembayaran === "belum_lunas" && (
-                    <div style={{ flex: 2, display: "flex", flexDirection: "column", gap: "8px", minWidth: "250px" }}>
-                      <input
-                        type="file"
-                        accept="image/jpeg,image/png,image/jpg,image/webp"
-                        onChange={(e) => setSelectedPaymentFile(e.target.files[0])}
-                        style={{ fontSize: "0.85rem" }}
-                      />
-                      <button
-                        onClick={handlePaymentUpload}
-                        disabled={!selectedPaymentFile || uploadingPayment}
-                        style={{
-                          ...styles.darkBtn,
-                          marginTop: 0,
-                          padding: "8px 12px",
-                          width: "auto",
-                          alignSelf: "flex-start",
-                          opacity: !selectedPaymentFile || uploadingPayment ? 0.6 : 1,
-                        }}
-                      >
-                        {uploadingPayment ? "Mengunggah..." : "Unggah Bukti (Gambar)"}
-                      </button>
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
-          )}
+          </div>
 
-          {/* ─── Card Denda ─── */}
           {rental?.denda > 0 && (
             <div style={styles.card}>
               <div style={{ ...styles.cardBody, padding: "20px 24px" }}>
@@ -1801,4 +1739,8 @@ const DetailPengajuanAlat = () => {
 };
 
 export default DetailPengajuanAlat;
+
+
+
+
 

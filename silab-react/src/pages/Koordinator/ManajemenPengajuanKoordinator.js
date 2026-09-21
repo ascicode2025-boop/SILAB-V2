@@ -334,7 +334,7 @@ export default function ManajemenPengajuanKoordinator() {
   const countDisetujui = useMemo(() => loans.filter((l) => l.statusTab === "disetujui").length, [loans]);
   const countDitolak = useMemo(() => loans.filter((l) => l.statusTab === "ditolak").length, [loans]);
   const countPembayaran = useMemo(
-    () => loans.filter((l) => l.statusPembayaran && l.statusPembayaran !== "tidak_perlu").length,
+    () => loans.filter((l) => l.statusDenda && l.statusDenda !== "tidak_ada").length,
     [loans]
   );
 
@@ -348,14 +348,14 @@ export default function ManajemenPengajuanKoordinator() {
     } else if (activeTab === "ditolak") {
       dataset = loans.filter((l) => l.statusTab === "ditolak");
     } else if (activeTab === "pembayaran") {
-      dataset = loans.filter((l) => l.statusPembayaran && l.statusPembayaran !== "tidak_perlu");
+      dataset = loans.filter((l) => l.statusDenda && l.statusDenda !== "tidak_ada");
 
       if (selectedPaymentFilter === "Belum Bayar") {
-        dataset = dataset.filter((l) => l.statusPembayaran === "belum_bayar");
+        dataset = dataset.filter((l) => l.statusDenda === "belum_dibayar" && !l.buktiDendaUrl);
       } else if (selectedPaymentFilter === "Menunggu") {
-        dataset = dataset.filter((l) => l.statusPembayaran === "menunggu");
+        dataset = dataset.filter((l) => l.statusDenda === "menunggu" || (l.statusDenda === "belum_dibayar" && l.buktiDendaUrl));
       } else if (selectedPaymentFilter === "Lunas") {
-        dataset = dataset.filter((l) => l.statusPembayaran === "lunas");
+        dataset = dataset.filter((l) => l.statusDenda === "lunas");
       }
     }
 
@@ -438,7 +438,7 @@ export default function ManajemenPengajuanKoordinator() {
     if (!selectedItem) return;
 
     try {
-      await axios.put(`http://localhost:8000/api/rentals/${selectedItem.id}/verify-payment`, {}, {
+      await axios.put(`http://localhost:8000/api/rentals/${selectedItem.id}/verify-denda`, {}, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
       fetchRentals();
@@ -782,7 +782,7 @@ export default function ManajemenPengajuanKoordinator() {
                           </span>
                         );
                       } else if (activeTab === "pembayaran") {
-                        if (item.statusPembayaran === "lunas") {
+                        if (item.statusDenda === "lunas") {
                           badgeElement = (
                             <span
                               style={{
@@ -798,7 +798,7 @@ export default function ManajemenPengajuanKoordinator() {
                               Lunas
                             </span>
                           );
-                        } else if (item.statusPembayaran === "menunggu") {
+                        } else if (item.statusDenda === "menunggu" || (item.statusDenda === "belum_dibayar" && item.buktiDendaUrl)) {
                           badgeElement = (
                             <span
                               style={{
@@ -1345,7 +1345,7 @@ export default function ManajemenPengajuanKoordinator() {
         )}
 
         {/* ========================================================================= */}
-        {/* 4. MODAL DETAIL PEMBAYARAN (TAB PEMBAYARAN) - Page 10, 13, 14              */}
+        {/* 4. MODAL DETAIL PEMBAYARAN (TAB PEMBAYARAN) - Denda                      */}
         {/* ========================================================================= */}
         {activeTab === "pembayaran" && selectedItem && (
           <Modal
@@ -1403,16 +1403,16 @@ export default function ManajemenPengajuanKoordinator() {
 
               <hr style={{ borderColor: "#EAEAEA", margin: "12px 0" }} />
 
-              {/* Total Pembayaran Banner */}
+              {/* Total Denda Banner */}
               <div className="text-center my-3">
                 <small className="text-muted d-block mb-1" style={{ fontSize: "0.78rem" }}>
-                  Total Pembayaran
+                  Total Denda Keterlambatan / Kerusakan
                 </small>
-                <h4 className="fw-bold mb-2" style={{ color: "#1F2937", fontSize: "1.35rem" }}>
-                  Rp {selectedItem.biaya ? selectedItem.biaya.toLocaleString("id-ID") : "40.000"}
+                <h4 className="fw-bold mb-2" style={{ color: "#DC2626", fontSize: "1.35rem" }}>
+                  Rp {selectedItem.denda ? selectedItem.denda.toLocaleString("id-ID") : "0"}
                 </h4>
 
-                {selectedItem.statusPembayaran === "lunas" && (
+                {selectedItem.statusDenda === "lunas" && (
                   <div>
                     <span
                       style={{
@@ -1425,15 +1425,12 @@ export default function ManajemenPengajuanKoordinator() {
                         display: "inline-block",
                       }}
                     >
-                      Lunas
+                      Denda Lunas
                     </span>
-                    <small className="text-muted d-block mt-1" style={{ fontSize: "0.72rem" }}>
-                      dikonfirmasi pada {selectedItem.tglKonfirmasiBayar || "11/08/2026"}
-                    </small>
                   </div>
                 )}
 
-                {selectedItem.statusPembayaran === "menunggu" && (
+                {(selectedItem.statusDenda === "menunggu" || (selectedItem.statusDenda === "belum_dibayar" && selectedItem.buktiDendaUrl)) && (
                   <span
                     style={{
                       backgroundColor: "#FEF08A",
@@ -1445,11 +1442,11 @@ export default function ManajemenPengajuanKoordinator() {
                       display: "inline-block",
                     }}
                   >
-                    Menunggu Konfirmasi
+                    Menunggu Verifikasi Denda
                   </span>
                 )}
 
-                {selectedItem.statusPembayaran === "belum_bayar" && (
+                {selectedItem.statusDenda === "belum_dibayar" && !selectedItem.buktiDendaUrl && (
                   <span
                     style={{
                       backgroundColor: "#E5E7EB",
@@ -1461,21 +1458,21 @@ export default function ManajemenPengajuanKoordinator() {
                       display: "inline-block",
                     }}
                   >
-                    Belum Melakukan Pembayaran
+                    Belum Melakukan Pembayaran Denda
                   </span>
                 )}
               </div>
 
-              {/* Bukti Pembayaran */}
-              {selectedItem.statusPembayaran !== "belum_bayar" && (
+              {/* Bukti Pembayaran Denda */}
+              {selectedItem.statusDenda !== "tidak_ada" && (
                 <div className="mb-3 text-start">
                   <small className="text-muted d-block mb-1" style={{ fontSize: "0.75rem" }}>
-                    Bukti Pembayaran
+                    Bukti Pembayaran Denda
                   </small>
-                  {selectedItem.buktiUrl && selectedItem.buktiUrl !== "#" ? (
+                  {selectedItem.buktiDendaUrl && selectedItem.buktiDendaUrl !== "#" ? (
                     <button
                       type="button"
-                      onClick={() => handleOpenProofModal(selectedItem.buktiUrl, "Bukti Pembayaran Sewa Alat")}
+                      onClick={() => handleOpenProofModal(selectedItem.buktiDendaUrl, "Bukti Pembayaran Denda")}
                       style={{
                         background: "none",
                         border: "none",
@@ -1490,7 +1487,7 @@ export default function ManajemenPengajuanKoordinator() {
                       }}
                     >
                       <FaFilePdf size={13} color="#EF4444" />
-                      {selectedItem.buktiPembayaran || "Bukti_Transfer.pdf"}
+                      {selectedItem.buktiDenda || "Bukti_Denda.pdf"}
                     </button>
                   ) : (
                     <span style={{ fontSize: "0.82rem", color: "#9CA3AF" }}>Belum ada bukti</span>
@@ -1498,145 +1495,15 @@ export default function ManajemenPengajuanKoordinator() {
                 </div>
               )}
 
-              {/* Denda Keterlambatan/Kerusakan */}
-              {selectedItem.denda > 0 && (
-                <>
-                  <hr style={{ borderColor: "#EAEAEA", margin: "16px 0" }} />
-                  <div className="text-center my-3">
-                    <small className="text-muted d-block mb-1" style={{ fontSize: "0.78rem" }}>
-                      Total Denda Keterlambatan / Kerusakan
-                    </small>
-                    <h4 className="fw-bold mb-2" style={{ color: "#DC2626", fontSize: "1.2rem" }}>
-                      Rp {selectedItem.denda.toLocaleString("id-ID")}
-                    </h4>
-
-                    {selectedItem.statusDenda === "lunas" && (
-                      <span
-                        style={{
-                          backgroundColor: colors.badgeBlueBg,
-                          color: colors.badgeBlueText,
-                          padding: "4px 16px",
-                          borderRadius: "20px",
-                          fontSize: "0.75rem",
-                          fontWeight: "600",
-                          display: "inline-block",
-                        }}
-                      >
-                        Denda Lunas
-                      </span>
-                    )}
-
-                    {(selectedItem.statusDenda === "menunggu" || (selectedItem.statusDenda === "belum_dibayar" && selectedItem.buktiDendaUrl)) && (
-                      <span
-                        style={{
-                          backgroundColor: "#FEF08A",
-                          color: "#854D0E",
-                          padding: "4px 16px",
-                          borderRadius: "20px",
-                          fontSize: "0.75rem",
-                          fontWeight: "600",
-                          display: "inline-block",
-                        }}
-                      >
-                        Menunggu Verifikasi Denda
-                      </span>
-                    )}
-
-                    {selectedItem.statusDenda === "belum_dibayar" && !selectedItem.buktiDendaUrl && (
-                      <span
-                        style={{
-                          backgroundColor: "#E5E7EB",
-                          color: "#4B5563",
-                          padding: "4px 16px",
-                          borderRadius: "20px",
-                          fontSize: "0.75rem",
-                          fontWeight: "600",
-                          display: "inline-block",
-                        }}
-                      >
-                        Belum Melakukan Pembayaran Denda
-                      </span>
-                    )}
-                  </div>
-
-                  {selectedItem.statusDenda !== "tidak_ada" && selectedItem.buktiDendaUrl && (
-                    <div className="mb-3 text-start">
-                      <small className="text-muted d-block mb-1" style={{ fontSize: "0.75rem" }}>
-                        Bukti Pembayaran Denda
-                      </small>
-                      <button
-                        type="button"
-                        onClick={() => handleOpenProofModal(selectedItem.buktiDendaUrl, "Bukti Pembayaran Denda")}
-                        style={{
-                          background: "none",
-                          border: "none",
-                          padding: 0,
-                          color: "#3B82F6",
-                          fontSize: "0.82rem",
-                          textDecoration: "underline",
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: "6px",
-                          cursor: "pointer",
-                        }}
-                      >
-                        <FaFilePdf size={13} color="#EF4444" />
-                        {selectedItem.buktiDenda || "Bukti_Denda.pdf"}
-                      </button>
-                    </div>
-                  )}
-
-                  {(selectedItem.statusDenda === "menunggu" || (selectedItem.statusDenda === "belum_dibayar" && selectedItem.buktiDendaUrl)) && (
-                    <div className="d-flex justify-content-center gap-2 mb-4">
-                      <button
-                        type="button"
-                        onClick={handleExecuteDendaConfirm}
-                        className="clean-btn-primary"
-                        style={{ backgroundColor: "#059669" }}
-                      >
-                        Verifikasi Denda
-                      </button>
-                    </div>
-                  )}
-                </>
-              )}
-
-              {/* Catatan Field */}
-              {selectedItem.statusPembayaran === "menunggu" && (
-                <div className="mb-4 text-start">
-                  <label className="fw-medium mb-1" style={{ fontSize: "0.78rem", color: "#374151" }}>
-                    Catatan
-                  </label>
-                  <Form.Control
-                    as="textarea"
-                    rows={2}
-                    placeholder="Tambahkan catatan jika diperlukan..."
-                    style={{
-                      borderRadius: "12px",
-                      border: "1px solid #D1D5DB",
-                      fontSize: "0.82rem",
-                    }}
-                  />
-                </div>
-              )}
-
               {/* Actions */}
-              {selectedItem.statusPembayaran === "menunggu" ? (
-                <div className="d-flex justify-content-center gap-2">
+              {(selectedItem.statusDenda === "menunggu" || (selectedItem.statusDenda === "belum_dibayar" && selectedItem.buktiDendaUrl)) ? (
+                <div className="d-flex justify-content-center gap-2 mt-4">
                   <button
                     type="button"
                     onClick={() => setShowDetailModal(false)}
                     className="clean-btn-secondary"
                   >
                     Batal
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={handleOpenPaymentReject}
-                    className="clean-btn-danger"
-                  >
-                    Tolak
                   </button>
 
                   <button
@@ -1648,7 +1515,7 @@ export default function ManajemenPengajuanKoordinator() {
                   </button>
                 </div>
               ) : (
-                <div className="text-center">
+                <div className="text-center mt-4">
                   <button
                     type="button"
                     onClick={() => setShowDetailModal(false)}
@@ -1736,13 +1603,13 @@ export default function ManajemenPengajuanKoordinator() {
 
           <div className="clean-modal-body text-center">
             <h6 className="fw-bold mb-2" style={{ color: "#1F2937", fontSize: "0.95rem" }}>
-              Konfirmasi Pembayaran?
+              Konfirmasi Pembayaran Denda?
             </h6>
             <small className="text-muted d-block mb-1" style={{ fontSize: "0.75rem" }}>
-              Total
+              Total Denda
             </small>
             <h5 className="fw-bold mb-4" style={{ color: "#1F2937" }}>
-              Rp {selectedItem?.biaya ? selectedItem.biaya.toLocaleString("id-ID") : "40.000"}
+              Rp {selectedItem?.denda ? selectedItem.denda.toLocaleString("id-ID") : "0"}
             </h5>
 
             <div className="d-flex justify-content-center gap-2">

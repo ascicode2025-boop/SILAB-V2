@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Table, Modal } from "react-bootstrap";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function SiapDiambil({ rentals, onRefresh, onHandover }) {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -31,6 +32,40 @@ export default function SiapDiambil({ rentals, onRefresh, onHandover }) {
     });
     setCatatan("");
     setShowDetailModal(true);
+  };
+
+    const handleWhatsApp = (item) => {
+    if (!item || !item.user) return;
+    const phone = item.user.nomor_telpon;
+    console.log('User data:', selectedItem.user);
+    if (!phone) {
+      alert("Nomor telepon tidak tersedia.");
+      return;
+    }
+    let formattedPhone = phone;
+    if (formattedPhone.startsWith("0")) {
+      formattedPhone = "62" + formattedPhone.substring(1);
+    }
+    const text = "Halo " + item.user.name + ",\n\nAlat yang Anda pinjam dengan No. Pengajuan *" + item.rental_number + "* telah disiapkan dan berstatus *Siap Diambil*.\n\nSilakan datang ke Laboratorium untuk mengambil alat tersebut pada tanggal *" + item.start_date + "*.\n\nTerima kasih.";
+    const url = "https://wa.me/" + formattedPhone + "?text=" + encodeURIComponent(text);
+    window.open(url, "_blank");
+  };
+
+  const handleWhatsAppHandover = () => {
+    if (!selectedItem || !selectedItem.user) return;
+    const phone = selectedItem.user.nomor_telpon;
+    console.log('User data:', selectedItem.user);
+    if (!phone) {
+      alert("Nomor telepon tidak tersedia.");
+      return;
+    }
+    let formattedPhone = phone;
+    if (formattedPhone.startsWith("0")) {
+      formattedPhone = "62" + formattedPhone.substring(1);
+    }
+    const text = "Halo " + selectedItem.user.name + ",\n\nAlat yang Anda pinjam dengan No. Pengajuan *" + selectedItem.rental_number + "* telah diserahkan kepada Anda dan berstatus *Sedang Dipinjam*.\n\nHarap menjaga alat dengan baik dan mengembalikannya tepat waktu pada tanggal *" + selectedItem.end_date + "*.\n\nTerima kasih.";
+    const url = "https://wa.me/" + formattedPhone + "?text=" + encodeURIComponent(text);
+    window.open(url, "_blank");
   };
 
   const handleSerahkanAlat = async () => {
@@ -289,7 +324,7 @@ export default function SiapDiambil({ rentals, onRefresh, onHandover }) {
                   Alat
                 </div>
                 <div style={{ color: "#212121", fontSize: "0.92rem", fontWeight: "600", lineHeight: "1.3" }}>
-                  {selecteditem.groupedItems?.map((i) => i.instrument?.name).join(", ")}
+                  {selectedItem.groupedItems?.map((i) => i.instrument?.name).join(", ")}
                 </div>
               </div>
               <div>
@@ -297,7 +332,7 @@ export default function SiapDiambil({ rentals, onRefresh, onHandover }) {
                   Jumlah
                 </div>
                 <div style={{ color: "#212121", fontSize: "0.92rem", fontWeight: "600" }}>
-                  {selecteditem.groupedItems?.reduce((total, i) => total + i.quantity, 0)} Unit
+                  {selectedItem.groupedItems?.reduce((total, i) => total + i.quantity, 0)} Unit
                 </div>
               </div>
               <div>
@@ -440,61 +475,87 @@ export default function SiapDiambil({ rentals, onRefresh, onHandover }) {
         )}
       </Modal>
 
-      {/* ─── 2. MODAL SUKSES (DATABERHASIL DISIMPAN) ─── */}
-      <Modal
-        show={showSuccessModal}
-        onHide={() => setShowSuccessModal(false)}
-        centered
-        dialogClassName="custom-modal-narrow custom-modal-clean"
-      >
-        {/* Header Bar */}
-        <div
-          style={{
-            backgroundColor: "#A6867B",
-            color: "#ffffff",
-            padding: "14px 20px",
-            textAlign: "center",
-            fontWeight: "700",
-            fontSize: "1.15rem",
-          }}
+              {/* MODAL SUKSES (DATABERHASIL DISIMPAN) */}
+        <Modal
+          show={showSuccessModal}
+          onHide={() => setShowSuccessModal(false)}
+          centered
+          dialogClassName="custom-modal-narrow custom-modal-clean"
         >
-          Detail Alat
-        </div>
-
-        <div style={{ padding: "36px 28px 32px", textAlign: "center" }}>
-          <p
+          {/* Header Bar */}
+          <div
             style={{
-              fontSize: "1rem",
-              fontWeight: 600,
-              color: "#333333",
-              lineHeight: "1.5",
-              marginBottom: "28px",
-            }}
-          >
-            Data Berhasil disimpan,
-            <br />
-            status telah diperbaharui!
-          </p>
-
-          <button
-            type="button"
-            onClick={handleCloseSuccess}
-            style={{
-              backgroundColor: "#44352F",
+              backgroundColor: "#A6867B",
               color: "#ffffff",
-              border: "none",
-              borderRadius: "12px",
-              padding: "8px 48px",
-              fontWeight: "600",
-              fontSize: "0.9rem",
-              cursor: "pointer",
-              boxShadow: "0 3px 10px rgba(68,53,47,0.35)",
+              padding: "14px 20px",
+              textAlign: "center",
+              fontWeight: "700",
+              fontSize: "1.15rem",
             }}
           >
-            Ok
-          </button>
-        </div>
-      </Modal>
+            Berhasil
+          </div>
+
+          <div style={{ padding: "36px 28px 32px", textAlign: "center" }}>
+            <p
+              style={{
+                fontSize: "1rem",
+                fontWeight: 600,
+                color: "#333333",
+                lineHeight: "1.5",
+                marginBottom: "28px",
+              }}
+            >
+              Data Berhasil disimpan,
+              <br />
+              status telah diperbaharui!
+            </p>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px", alignItems: "center" }}>
+              <button
+                type="button"
+                onClick={handleWhatsAppHandover}
+                style={{
+                  backgroundColor: "#25D366",
+                  color: "#ffffff",
+                  border: "none",
+                  borderRadius: "12px",
+                  padding: "10px 24px",
+                  fontWeight: "600",
+                  fontSize: "0.9rem",
+                  cursor: "pointer",
+                  boxShadow: "0 3px 10px rgba(37,211,102,0.35)",
+                  width: "100%",
+                  maxWidth: "250px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px"
+                }}
+              >
+                <FaWhatsapp size={18} /> Hubungi via WhatsApp
+              </button>
+              <button
+                type="button"
+                onClick={handleCloseSuccess}
+                style={{
+                  backgroundColor: "#44352F",
+                  color: "#ffffff",
+                  border: "none",
+                  borderRadius: "12px",
+                  padding: "10px 24px",
+                  fontWeight: "600",
+                  fontSize: "0.9rem",
+                  cursor: "pointer",
+                  width: "100%",
+                  maxWidth: "250px",
+                }}
+              >
+                Tutup
+              </button>
+            </div>
+          </div>
+        </Modal>
 
       {/* ─── 3. MODAL ERROR ─── */}
       <Modal
@@ -548,3 +609,7 @@ export default function SiapDiambil({ rentals, onRefresh, onHandover }) {
     </div>
   );
 }
+
+
+
+

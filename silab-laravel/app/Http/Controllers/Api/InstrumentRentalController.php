@@ -737,7 +737,8 @@ class InstrumentRentalController extends Controller
         
         $rental->update([
             'status' => 'selesai',
-            'status_denda' => 'lunas'
+            'status_denda' => 'lunas',
+            'status_pembayaran' => 'lunas'
         ]);
 
         $this->sendNotification($rental->user_id, 'Pembayaran Denda Diverifikasi', "Pembayaran denda untuk peminjaman alat (ID: {$rental->id}) telah diverifikasi dan lunas.");

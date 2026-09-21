@@ -253,7 +253,7 @@ const DaftarAlatComponent = ({ tool, onClick }) => {
               )}
             </div>
             <div className="d-flex justify-content-around align-items-center text-muted" style={{ fontSize: "0.82rem" }}>
-              <span>Total Unit: <strong>{tool.total_unit ?? 1}</strong></span>
+              <span>Stok Tersedia: <strong>{tool.stok_tersedia ?? 1}</strong></span>
               <span style={{ color: "#CBD5E1" }}>|</span>
               <span>Status: <strong className={tool.status === "tersedia" ? "text-success" : "text-danger"}>{tool.status === "tersedia" ? "Tersedia" : tool.status}</strong></span>
             </div>

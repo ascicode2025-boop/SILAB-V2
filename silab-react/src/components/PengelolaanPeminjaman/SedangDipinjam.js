@@ -303,7 +303,7 @@ export default function SedangDipinjam({ rentals = [] }) {
                 Alat
               </div>
               <div style={{ color: "#212121", fontSize: "0.95rem", fontWeight: "600", lineHeight: "1.3" }}>
-                {selecteditem.groupedItems?.map((i) => `${i.instrument?.name} (${i.quantity})`).join(", ")}
+                {selectedItem.groupedItems?.map((i) => `${i.instrument?.name} (${i.quantity})`).join(", ")}
               </div>
             </div>
 

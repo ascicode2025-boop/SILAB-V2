@@ -23,7 +23,7 @@ export default function PengelolaanPeminjamanAlat() {
       const mappedData = (res?.data || []).map(r => ({
         ...r,
         rental_number: `PJ${String(r.id).padStart(3, '0')}`,
-        user: { name: r.user?.name || "Unknown" },
+        user: { name: r.user?.name || "Unknown", nomor_telpon: r.user?.nomor_telpon },
         items: r.instruments?.map(i => ({
           ...i,
           instrument_id: i.id,
@@ -172,4 +172,5 @@ export default function PengelolaanPeminjamanAlat() {
     </NavbarLoginTeknisi>
   );
 }
+
 

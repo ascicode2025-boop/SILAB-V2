@@ -88,7 +88,7 @@ const DaftarAlat = () => {
       return;
     }
 
-    const totalUnit = selectedTool.total_unit ?? 1;
+    const totalUnit = selectedTool.stok_tersedia ?? 1;
     if (totalUnit <= 0) {
       setToastMessage(`Maaf, unit alat "${selectedTool.nama_alat}" saat ini tidak tersedia.`);
       setShowToast(true);
@@ -103,7 +103,7 @@ const DaftarAlat = () => {
       newCart[existingIndex] = {
         ...newCart[existingIndex],
         quantity: newQty,
-        total_unit: totalUnit,
+        stok_tersedia: totalUnit,
       };
     } else {
       newCart.push({
@@ -112,7 +112,7 @@ const DaftarAlat = () => {
         deskripsi: selectedTool.deskripsi,
         harga_sewa: selectedTool.harga_sewa || 0,
         is_paid: selectedTool.is_paid,
-        total_unit: totalUnit,
+        stok_tersedia: totalUnit,
         quantity: Math.min(totalUnit, quantity),
       });
     }
@@ -132,7 +132,7 @@ const DaftarAlat = () => {
       prev
         .map((item) => {
           if (item.id === id) {
-            const max = item.total_unit ?? 99;
+            const max = item.stok_tersedia ?? 99;
             const newQty = item.quantity + delta;
             if (newQty <= 0) return null;
             return { ...item, quantity: Math.min(max, newQty) };
@@ -168,7 +168,7 @@ const DaftarAlat = () => {
       (tool.deskripsi || "").toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const currentMaxStock = selectedTool ? (selectedTool.total_unit ?? 1) : 1;
+  const currentMaxStock = selectedTool ? (selectedTool.stok_tersedia ?? 1) : 1;
 
   return (
     <NavbarLoginKlien>
@@ -529,10 +529,10 @@ const DaftarAlat = () => {
                 <Row className="mb-3 text-center">
                   <Col xs={6}>
                     <div className="fw-bold mb-1" style={{ color: "#3E2723", fontSize: "0.9rem" }}>
-                      Total Unit
+                      Stok Tersedia
                     </div>
                     <div className="text-secondary fw-semibold" style={{ fontSize: "0.82rem" }}>
-                      {selectedTool.total_unit ?? 1} Unit
+                      {selectedTool.stok_tersedia ?? 1} Unit
                     </div>
                   </Col>
                   <Col xs={6}>
@@ -827,7 +827,7 @@ const DaftarAlat = () => {
                             border: "1px solid #D0D0D0",
                           }}
                           onClick={() => handleUpdateCartQty(item.id, 1)}
-                          disabled={item.quantity >= (item.total_unit ?? 99)}
+                          disabled={item.quantity >= (item.stok_tersedia ?? 99)}
                         >
                           <FaPlus size={10} />
                         </Button>

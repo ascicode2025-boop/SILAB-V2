@@ -297,7 +297,7 @@ const PengajuanPeminjamanAlat = () => {
     const currentTool = availableTools.find((t) => t.id.toString() === toolId);
     const stockInfo = availableStock[toolId];
     // Use available stock from API if we have date-based data, otherwise fall back to total_unit
-    const maxStock = stockInfo ? stockInfo.available : (currentTool ? (currentTool.total_unit ?? 99) : 99);
+    const maxStock = stockInfo ? stockInfo.available : (currentTool ? (currentTool.stok_tersedia ?? 99) : 99);
     const newQty = Math.max(1, Math.min(maxStock, (parseInt(updated[index].quantity, 10) || 1) + delta));
     updated[index] = { ...updated[index], quantity: newQty };
     setSelectedTools(updated);
@@ -392,15 +392,15 @@ const PengajuanPeminjamanAlat = () => {
       const tool = availableTools.find((t) => t.id.toString() === toolItem.id.toString());
       const toolName = tool?.nama_alat || "Alat";
       const stockInfo = availableStock[toolItem.id];
-      const availableQty = stockInfo ? stockInfo.available : (tool?.total_unit ?? 99);
+      const availableQty = stockInfo ? stockInfo.available : (tool?.stok_tersedia ?? 99);
       const requestedQty = parseInt(toolItem.quantity, 10) || 1;
 
       if (stockInfo && availableQty <= 0) {
         setErrorMsg(`Alat "${toolName}" sudah dipesan pada rentang tanggal yang dipilih. Anda tidak dapat memesan di tanggal yang bersamaan. Silakan pilih tanggal peminjaman yang lain.`);
         return;
       }
-      if (requestedQty > (tool?.total_unit ?? 99)) {
-        setErrorMsg(`Jumlah peminjaman "${toolName}" (${requestedQty} unit) melebihi kapasitas total unit laboratorium (${tool?.total_unit ?? 1} unit).`);
+      if (requestedQty > (tool?.stok_tersedia ?? 99)) {
+        setErrorMsg(`Jumlah peminjaman "${toolName}" (${requestedQty} unit) melebihi kapasitas total unit laboratorium (${tool?.stok_tersedia ?? 1} unit).`);
         return;
       }
       if (stockInfo && requestedQty > availableQty) {
@@ -603,7 +603,7 @@ const PengajuanPeminjamanAlat = () => {
                     {selectedTools.map((toolItem, index) => {
                       const tool = availableTools.find((t) => t.id.toString() === toolItem.id.toString());
                       const stockInfo = availableStock[toolItem.id];
-                      const maxStock = stockInfo ? stockInfo.available : (tool ? (tool.total_unit ?? 99) : 99);
+                      const maxStock = stockInfo ? stockInfo.available : (tool ? (tool.stok_tersedia ?? 99) : 99);
                       const isDateBooked = Boolean(toolItem.id && tanggalPeminjaman && tanggalPengembalian && stockInfo && stockInfo.available <= 0);
 
                       return (
@@ -636,7 +636,7 @@ const PengajuanPeminjamanAlat = () => {
                                 const isSelectedElsewhere = selectedTools.some((st, i) => i !== index && st.id.toString() === t.id.toString());
                                 return (
                                   <option key={t.id} value={t.id} disabled={isSelectedElsewhere}>
-                                    {t.nama_alat} {t.is_paid ? `(Berbayar - Rp ${Number(t.harga_sewa).toLocaleString("id-ID")})` : "(Gratis)"} (Total: {t.total_unit ?? 1} Unit)
+                                    {t.nama_alat} {t.is_paid ? `(Berbayar - Rp ${Number(t.harga_sewa).toLocaleString("id-ID")})` : "(Gratis)"} (Total: {t.stok_tersedia ?? 1} Unit)
                                   </option>
                                 );
                               })}
@@ -732,7 +732,7 @@ const PengajuanPeminjamanAlat = () => {
                                 <FaPlus size={9} />
                               </Button>
                               <span className={isDateBooked ? "text-danger fw-bold" : "text-muted"} style={{ fontSize: "0.75rem" }}>
-                                {isDateBooked ? "(Sudah Dipesan di Tanggal Ini)" : `(Kapasitas: ${tool?.total_unit ?? 1} Unit)`}
+                                {isDateBooked ? "(Sudah Dipesan di Tanggal Ini)" : `(Kapasitas: ${maxStock} Unit)`}
                               </span>
                             </div>
 
