@@ -1,1 +1,0 @@
-const t=()=>"https://api.silabntdk.com/api".includes("https://api.silabntdk.com")&&typeof window<"u"&&(window.location.hostname==="localhost"||window.location.hostname==="127.0.0.1")?"http://localhost:8000/api":"https://api.silabntdk.com/api",i=()=>t().replace(/\/api\/?$/,"");export{i as a,t as g};

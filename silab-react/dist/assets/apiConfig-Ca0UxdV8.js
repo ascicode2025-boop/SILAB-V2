@@ -1,0 +1,1 @@
+const t=()=>(typeof window<"u"&&(window.location.hostname==="localhost"||window.location.hostname==="127.0.0.1"),"https://api.silabntdk.com/api"),o=()=>t().replace(/\/api\/?$/,"");export{o as a,t as g};
