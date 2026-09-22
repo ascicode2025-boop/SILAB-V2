@@ -9,6 +9,7 @@ import updateLocale from "dayjs/plugin/updateLocale";
 import "antd/dist/reset.css";
 import axios from "axios";
 import NavbarLoginKoordinator from "./NavbarLoginKoordinator";
+import { getStorageUrl, getApiBaseUrl } from "../../config/apiConfig";
 import { getClosedRentalDates, closeRentalDate, openRentalDate } from "../../services/RentalService";
 import "../../css/BookingCalenderKlien.css";
 
@@ -48,7 +49,7 @@ export default function KalenderPeminjamanAlat() {
 
   const fetchRentals = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/rentals", {
+      const response = await axios.get(`${getApiBaseUrl()}/rentals`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
       const rentals = response.data.data;
@@ -145,7 +146,7 @@ export default function KalenderPeminjamanAlat() {
 
     setIsUpdating(true);
     try {
-      await axios.put(`http://localhost:8000/api/rentals/${detailViewLoan.rentalId}/update-dates`, {
+      await axios.put(`${getApiBaseUrl()}/rentals/${detailViewLoan.rentalId}/update-dates`, {
         tanggal_peminjaman: editStartDate.format("YYYY-MM-DD"),
         tanggal_pengembalian: editEndDate.format("YYYY-MM-DD"),
       }, {

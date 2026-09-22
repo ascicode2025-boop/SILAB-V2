@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/id";
 import NavbarLoginKoordinator from "./NavbarLoginKoordinator";
 import FooterSetelahLogin from "../FooterSetelahLogin";
-import { getStorageUrl } from "../../config/apiConfig";
+import { getStorageUrl, getApiBaseUrl } from "../../config/apiConfig";
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/500.css";
 import "@fontsource/poppins/600.css";
@@ -178,7 +178,7 @@ export default function ManajemenPengajuanKoordinator() {
 
   const fetchRentals = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/rentals", {
+      const response = await axios.get(`${getApiBaseUrl()}/rentals`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
       const data = response.data.data.map(rental => {
@@ -389,7 +389,7 @@ export default function ManajemenPengajuanKoordinator() {
     if (!selectedItem) return;
 
     try {
-      await axios.put(`http://localhost:8000/api/rentals/${selectedItem.id}/verify`, {
+      await axios.put(`${getApiBaseUrl()}/rentals/${selectedItem.id}/verify`, {
         status: "disetujui",
         catatan_koordinator: catatanInput
       }, {
@@ -414,7 +414,7 @@ export default function ManajemenPengajuanKoordinator() {
     const reason = rejectReasonInput.trim() || catatanInput.trim() || "Tanggal yang diajukan tidak tersedia";
 
     try {
-      await axios.put(`http://localhost:8000/api/rentals/${selectedItem.id}/verify`, {
+      await axios.put(`${getApiBaseUrl()}/rentals/${selectedItem.id}/verify`, {
         status: "ditolak",
         catatan_koordinator: reason
       }, {
@@ -438,7 +438,7 @@ export default function ManajemenPengajuanKoordinator() {
     if (!selectedItem) return;
 
     try {
-      await axios.put(`http://localhost:8000/api/rentals/${selectedItem.id}/verify-denda`, {}, {
+      await axios.put(`${getApiBaseUrl()}/rentals/${selectedItem.id}/verify-denda`, {}, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
       fetchRentals();
@@ -461,7 +461,7 @@ export default function ManajemenPengajuanKoordinator() {
     const reason = paymentRejectReason.trim() || "Pembayaran ditolak/tidak valid";
 
     try {
-      await axios.put(`http://localhost:8000/api/rentals/${selectedItem.id}/reject-payment`, {
+      await axios.put(`${getApiBaseUrl()}/rentals/${selectedItem.id}/reject-payment`, {
         alasan: reason
       }, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
@@ -479,7 +479,7 @@ export default function ManajemenPengajuanKoordinator() {
     if (!selectedItem) return;
 
     try {
-      await axios.put(`http://localhost:8000/api/rentals/${selectedItem.id}/verify-denda`, {}, {
+      await axios.put(`${getApiBaseUrl()}/rentals/${selectedItem.id}/verify-denda`, {}, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
       fetchRentals();

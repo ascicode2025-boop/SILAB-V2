@@ -8,7 +8,7 @@ import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
 import Footer from "./Footer";
 import DaftarAlatComponent, { LabBannerSVG } from "../components/DaftarAlat/DaftarAlatComponent";
-import { getStorageUrl } from "../config/apiConfig";
+import { getStorageUrl, getApiBaseUrl } from "../config/apiConfig";
 import axios from "axios";
 
 const DaftarAlatSebelumLogin = () => {
@@ -25,8 +25,8 @@ const DaftarAlatSebelumLogin = () => {
 
   const fetchTools = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/instruments");
-      setTools(response.data.data);
+      const response = await axios.get(`${getApiBaseUrl()}/instruments`);
+      setTools(response.data.data || []);
     } catch (error) {
       console.error("Gagal mengambil data alat", error);
     }

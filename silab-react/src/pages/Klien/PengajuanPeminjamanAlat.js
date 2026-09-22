@@ -100,7 +100,7 @@ const PengajuanPeminjamanAlat = () => {
 
   const fetchClosedDates = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/rentals/closed-dates", {
+      const response = await axios.get(`${getApiBaseUrl()}/rentals/closed-dates`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           Accept: "application/json",
@@ -114,7 +114,7 @@ const PengajuanPeminjamanAlat = () => {
 
   const fetchInstruments = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/instruments");
+      const response = await axios.get(`${getApiBaseUrl()}/instruments`);
       const list = response.data.data || [];
       setAvailableTools(list);
       if (!toolIdFromUrl && selectedTools.length === 1 && !selectedTools[0].id && list.length > 0) {
@@ -129,8 +129,8 @@ const PengajuanPeminjamanAlat = () => {
     try {
       const ids = [...new Set(selectedTools.map((item) => item.id).filter(Boolean))].join(",");
       const url = ids
-        ? `http://localhost:8000/api/rentals/booked-dates?instrument_ids=${ids}`
-        : `http://localhost:8000/api/rentals/booked-dates`;
+        ? `${getApiBaseUrl()}/rentals/booked-dates?instrument_ids=${ids}`
+        : `${getApiBaseUrl()}/rentals/booked-dates`;
       const response = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -156,7 +156,7 @@ const PengajuanPeminjamanAlat = () => {
         return;
       }
       const response = await axios.get(
-        `http://localhost:8000/api/rentals/available-stock?instrument_ids=${ids}&start_date=${tanggalPeminjaman}&end_date=${tanggalPengembalian}`,
+        `${getApiBaseUrl()}/rentals/available-stock?instrument_ids=${ids}&start_date=${tanggalPeminjaman}&end_date=${tanggalPengembalian}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -445,7 +445,7 @@ const PengajuanPeminjamanAlat = () => {
         formData.append("payment_proof", buktiPembayaran);
       }
 
-      await axios.post("http://localhost:8000/api/rentals", formData, {
+      await axios.post(`${getApiBaseUrl()}/rentals`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
